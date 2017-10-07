@@ -14,7 +14,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Map
-          style="mapbox://styles/mapbox/streets-v9"
+          style="mapbox://styles/mapbox/outdoors-v9"
           center={[-122.4194, 37.7749]}
           containerStyle={{
             height: '100vh',
