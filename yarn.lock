@@ -3475,7 +3475,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-"lodash@>=3.5 <5", lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0:
+lodash@4.x.x, "lodash@>=3.5 <5", lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -5792,6 +5792,12 @@ ts-loader@^2.2.1:
     enhanced-resolve "^3.0.0"
     loader-utils "^1.0.2"
     semver "^5.0.1"
+
+ts-money@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/ts-money/-/ts-money-0.4.4.tgz#c81e6ba3b4ba13605359ae2ec4275a2bce97ce5b"
+  dependencies:
+    lodash "4.x.x"
 
 tslib@^1.7.1:
   version "1.7.1"
