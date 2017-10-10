@@ -1,14 +1,14 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import ReactMapboxGl, { Layer, Feature, Marker } from 'react-mapbox-gl';
-import salesforceTower from './data/salesforceTower';
+import ReactMapboxGl, {Layer, Feature, Marker} from 'react-mapbox-gl'
+import salesforceTower from './data/salesforceTower'
 
-import './App.css';
+import './App.css'
 
 const Map = ReactMapboxGl({
   accessToken:
     'pk.eyJ1Ijoib3NuciIsImEiOiJjajZwanhjYmwwMDB3MnhxcG9ocHJmMDBsIn0.T8Xi_6tEDq_4Yf3YSYLEPA',
-});
+})
 
 class App extends React.Component {
   render() {
@@ -34,7 +34,7 @@ class App extends React.Component {
           </Layer>
 
           <Marker
-            style={{ cursor: 'pointer' }}
+            style={{cursor: 'pointer'}}
             onClick={() => alert(JSON.stringify(salesforceTower, null, 2))}
             coordinates={salesforceTower.locations[0] as [number, number]}
             anchor="bottom"
@@ -43,8 +43,8 @@ class App extends React.Component {
           </Marker>
         </Map>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
