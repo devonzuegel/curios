@@ -1,13 +1,11 @@
-import { Money, Currencies } from 'ts-money';
-import { TProject } from './project.d';
+import {Money, Currencies} from 'ts-money'
+import {TProject} from './project.d'
 
-const oneBillion = 1000000000.0;
+const oneBillion = 1000000000.0
 
 const salesforceTower: TProject = {
   names: ['Salesforce Tower'],
-  keyDates: [
-    { date: new Date('2018'), title: 'Expected completion date', notes: [] },
-  ],
+  keyDates: [{date: new Date('2018'), title: 'Expected completion date', notes: []}],
   locations: [[-122.3969, 37.7899]],
   budgets: [
     Money.fromDecimal(oneBillion, Currencies.USD),
@@ -31,6 +29,6 @@ const salesforceTower: TProject = {
     'https://upload.wikimedia.org/wikipedia/commons/a/a3/Salesforce_Tower_April_2017.jpg',
   ],
   resourceUrls: ['https://en.wikipedia.org/wiki/Salesforce_Tower'],
-};
+}
 
-export default salesforceTower;
+export default salesforceTower
