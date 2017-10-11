@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "The coffee bar",
+        "login": "espresso",
+        "lat": "37.7899",
+        "lon": "-122.3969"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.399, 37.8]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "Bistro Bohem",
+        "login": "2027355895",
+        "lat": "37.7899",
+        "lon": "-122.3969"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.3969, 37.7819]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "Black Cat",
+        "login": "luckycat",
+        "lat": "37.7899",
+        "lon": "-122.3969"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.3919, 37.7905]
+      }
+    }
+  ]
+}
