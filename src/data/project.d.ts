@@ -1,5 +1,7 @@
 import * as Money from 'ts-money'
 
+import * as MapboxGl from 'mapbox-gl'
+
 type TName = string
 type TDate = {
   date: Date
