@@ -6,7 +6,16 @@ body {
   font-family: 'Roboto Mono';
 }
 
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+}
+
+#map-test {
+  height: 100vh;
+}
 .map {
+  display: none;
   border-left: 3px solid white;
   position: absolute;
   left: 25%;
@@ -16,6 +25,7 @@ body {
 }
 
 .sidebar {
+  display: none;
   width: 25%;
   overflow: scroll;
   height: 100vh;

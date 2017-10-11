@@ -2,6 +2,8 @@ import * as React from 'react'
 import ReactMapboxGl, {GeoJSONLayer} from 'react-mapbox-gl'
 import * as MapboxGL from 'mapbox-gl'
 
+import MapTest from './MapTest'
+
 // tslint:disable-next-line:no-var-requires
 const geojson: GeoJSON.FeatureCollection<
   GeoJSON.DirectGeometryObject
@@ -33,7 +35,8 @@ class GeoJsonLayer extends React.Component<{}, {}> {
 
   public render() {
     return (
-      <div>
+      <div className="wrapper">
+        <MapTest />
         <div className="sidebar">
           {geojson.features.map((store, k) => (
             <div className="listing" onClick={() => this.flyToStore(store)} key={k}>
