@@ -6,25 +6,31 @@ type TName = string
 type TDate = {
   date: Date
   title: string
+  source?: string
+  forecast?: boolean
   notes: string[]
 }
-type TBudget = number
 type TCategory = string
 type TNote = string
 type TPlayer = string
 type TMediaUrl = string
 type TResourceUrl = string
+type TBudget = {
+  cost: Money.Money
+  name?: string
+  source?: string
+  forecast?: boolean
+}
 
-// A location can be a single point or a polygon region
-type TCoordinate = [number, number]
-type TPolygon = TCoordinate[]
-type TLocation = TPolygon | TCoordinate
+type TCoordinates = number[]
+type TPolygon = {kind: 'polygon'; coordinates: TCoordinates[]; source?: string}
+type TPoint = {kind: 'point'; coordinates: TCoordinates; source?: string}
 
 export type TProject = {
   names: TName[]
   keyDates: TDate[]
-  locations: TLocation[]
-  budgets: Money.Money[]
+  locations: TPolygon[] | TPoint[]
+  budgets: TBudget[]
   categories: TCategory[]
   notes: TNote[]
   players: TPlayer[]

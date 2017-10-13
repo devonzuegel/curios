@@ -6,10 +6,10 @@ const oneBillion = 1000000000.0
 const salesforceTower: TProject = {
   names: ['Salesforce Tower'],
   keyDates: [{date: new Date('2018'), title: 'Expected completion date', notes: []}],
-  locations: [[-122.3969, 37.7899]],
+  locations: [{kind: 'point', coordinates: [-122.3969, 37.7899]}],
   budgets: [
-    Money.fromDecimal(oneBillion, Currencies.USD),
-    Money.fromDecimal(oneBillion * 1.1, Currencies.USD),
+    {cost: Money.fromDecimal(oneBillion, Currencies.USD)},
+    {cost: Money.fromDecimal(oneBillion * 1.1, Currencies.USD)},
   ],
   categories: ['building', 'construction', 'private', 'skyscraper'],
   notes: [
