@@ -1,4 +1,3 @@
-import {Money, Currencies} from 'ts-money'
 import {TProject} from './project.d'
 
 const oneBillion = 1000000000.0
@@ -8,8 +7,8 @@ const salesforceTower: TProject = {
   keyDates: [{date: new Date('2018'), title: 'Expected completion date', notes: []}],
   locations: [{kind: 'point', coordinates: [-122.3969, 37.7899]}],
   budgets: [
-    {cost: Money.fromDecimal(oneBillion, Currencies.USD)},
-    {cost: Money.fromDecimal(oneBillion * 1.1, Currencies.USD)},
+    {cost: {amount: oneBillion, currency: 'USD'}},
+    {cost: {amount: oneBillion * 1.1, currency: 'USD'}},
   ],
   categories: ['building', 'construction', 'private', 'skyscraper'],
   notes: [

@@ -1,4 +1,3 @@
-import {Money, Currencies} from 'ts-money'
 import {TProject} from './project.d'
 
 const centralSubway: TProject = {
@@ -40,14 +39,14 @@ const centralSubway: TProject = {
   budgets: [
     {
       name: 'Original at FFGA',
-      cost: Money.fromDecimal(1578300000, Currencies.USD),
+      cost: {amount: 1578300000, currency: 'USD'},
       source:
         'https://www.sfmta.com/sites/default/files/reports/2017/1708_PMOC.pdf#page=3',
     },
     {
       name: 'Current Estimate',
       forecast: true,
-      cost: Money.fromDecimal(1578300000, Currencies.USD),
+      cost: {amount: 1578300000, currency: 'USD'},
       source:
         'https://www.sfmta.com/sites/default/files/reports/2017/1708_PMOC.pdf#page=3',
     },

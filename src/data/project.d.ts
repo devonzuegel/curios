@@ -1,5 +1,3 @@
-import * as Money from 'ts-money'
-
 import * as MapboxGl from 'mapbox-gl'
 
 type TName = string
@@ -16,7 +14,7 @@ type TPlayer = string
 type TMediaUrl = string
 type TResourceUrl = string
 type TBudget = {
-  cost: Money.Money
+  cost: {amount: number; currency: 'USD'}
   name?: string
   source?: string
   forecast?: boolean
