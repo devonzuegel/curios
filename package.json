@@ -3,10 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/classnames": "^2.2.3",
+    "@types/lodash": "^4.14.77",
+    "@types/ramda": "^0.24.17",
+    "classnames": "^2.2.5",
     "husky": "^0.14.3",
     "lint-staged": "^4.2.3",
+    "lodash": "^4.17.4",
     "mapbox-gl": "^0.40.1",
     "prettier": "^1.7.4",
+    "ramda": "^0.25.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-mapbox-gl": "^2.7.0",
@@ -14,7 +20,10 @@
     "ts-money": "^0.4.4"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css}": ["prettier --write", "git add"]
+    "src/**/*.{js,jsx,ts,tsx,json,css}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "scripts": {
     "precommit": "lint-staged",

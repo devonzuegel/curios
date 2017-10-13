@@ -1,5 +1,52 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #eee;
+  font-family: 'Roboto Mono';
+}
+
+pre {
+  font-family: 'Roboto Mono';
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-weight: 400;
+  font-size: 0.8em;
+}
+
+.map {
+  cursor: pointer;
+  position: absolute;
+  left: calc(25% + 2px); /* Make room for sidebar's border */
+  width: calc(75% - 2px);
+  top: 0;
+  bottom: 0;
+}
+
+.sidebar {
+  border-right: 2px solid white;
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ced2d5' fill-opacity='.5' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+  width: 25%;
+  overflow: scroll;
+  height: 100vh;
+}
+
+.listing {
+  font-weight: 600;
+  margin: 8px 0;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  color: rgba(21, 35, 44, 0.6);
+  box-shadow: rgba(48, 95, 129, 0.05) 5px 5px 30px 0px;
+  transition: all 0.1s linear;
+}
+
+.listing:hover,
+.selected {
+  background: rgba(255, 255, 255, 1);
+  color: rgba(21, 35, 44, 1);
+  box-shadow: rgba(48, 95, 129, 0.06) 5px 5px 30px 0px;
+  cursor: pointer;
+  transition: all 0.1s linear;
 }
