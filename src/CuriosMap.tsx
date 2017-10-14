@@ -1,21 +1,22 @@
 import * as React from 'react'
 import * as MapboxGl from 'mapbox-gl'
-import * as classnames from 'classnames'
 import {throttle} from 'lodash'
-import ReactMapboxGl, {GeoJSONLayer} from 'react-mapbox-gl'
 import {MapEvent} from 'react-mapbox-gl/lib/map'
+import ReactMapboxGl, {GeoJSONLayer} from 'react-mapbox-gl'
+
+import {TFeature, TCollection} from './features.d'
+import Sidebar from './Sidebar'
 
 const Map = ReactMapboxGl({
   accessToken:
     'pk.eyJ1IjoiZGV2b256dWVnZWwiLCJhIjoickpydlBfZyJ9.wEHJoAgO0E_tg4RhlMSDvA',
 })
 
-type TCollection = GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject>
-
 type TState = {
   zoom: number[]
   center: number[]
   selected?: string
+  style: string
 }
 
 type TProps = {
@@ -23,7 +24,11 @@ type TProps = {
 }
 
 class CuriosMap extends React.Component<TProps, TState> {
-  state: TState = {center: [-122.4194, 37.7749], zoom: [12]}
+  state: TState = {
+    center: [-122.4194, 37.7749],
+    zoom: [12],
+    style: 'mapbox://styles/devonzuegel/cj8rx2ti3aw2z2rnzhwwy3bvp',
+  }
 
   private boundsChanged: MapEvent = throttle(
     (map: MapboxGl.Map): void => this.setState({center: map.getCenter().toArray()}),
@@ -31,7 +36,7 @@ class CuriosMap extends React.Component<TProps, TState> {
     {leading: true}
   )
 
-  private selectPoint = (feat: GeoJSON.Feature<GeoJSON.DirectGeometryObject>) => {
+  private selectPoint = (feat: TFeature) => {
     if (this.state.selected === feat.properties.place) {
       this.setState({selected: undefined})
       return
@@ -43,7 +48,7 @@ class CuriosMap extends React.Component<TProps, TState> {
     })
   }
 
-  private selectPolygon = (feat: GeoJSON.Feature<GeoJSON.DirectGeometryObject>) => {
+  private selectPolygon = (feat: TFeature) => {
     if (this.state.selected === feat.properties.place) {
       this.setState({selected: undefined})
       return
@@ -62,7 +67,7 @@ class CuriosMap extends React.Component<TProps, TState> {
     })
   }
 
-  private featureLayer = (f: GeoJSON.Feature<GeoJSON.DirectGeometryObject>) => {
+  private featureLayer = (f: TFeature) => {
     const darkBlue = '#15232c'
     if (f.geometry.type === 'Point') {
       return (
@@ -103,7 +108,7 @@ class CuriosMap extends React.Component<TProps, TState> {
           fillPaint={{
             'fill-outline-color': '#ffffff',
             'fill-color': darkBlue,
-            'fill-opacity': {stops: [[13, 0.1], [14, 0.2]]},
+            'fill-opacity': {stops: [[13, 0.15], [14, 0.25]]},
           }}
           symbolLayout={{
             'text-padding': 100,
@@ -125,7 +130,6 @@ class CuriosMap extends React.Component<TProps, TState> {
     return null
   }
   public render() {
-    const features = this.props.data.features
     return (
       <div>
         <div id="map" className="map pad2">
@@ -135,37 +139,25 @@ class CuriosMap extends React.Component<TProps, TState> {
             onMove={this.boundsChanged}
             zoom={this.state.zoom}
             center={this.state.center}
-            style="mapbox://styles/devonzuegel/cj8rx2ti3aw2z2rnzhwwy3bvp"
+            style={this.state.style}
             containerStyle={{height: '100%', width: '100%'}}
           >
-            {features.map(this.featureLayer)}
+            {this.props.data.features.map(this.featureLayer)}
             />
           </Map>
         </div>
 
-        <div className="sidebar">
-          {features.map((feature, k) => {
-            const selected = feature.properties.place === this.state.selected
-            return (
-              <div
-                className={classnames({listing: true, selected})}
-                onClick={() => {
-                  if (feature.geometry.type === 'Point') {
-                    this.selectPoint(feature)
-                  } else if (feature.geometry.type === 'Polygon') {
-                    this.selectPolygon(feature)
-                  }
-                }}
-                key={k}
-              >
-                {feature.properties.place}
-                {selected && (
-                  <pre>{JSON.stringify(feature.properties, null, 2)}</pre>
-                )}
-              </div>
-            )
-          })}
-        </div>
+        <Sidebar
+          features={this.props.data.features}
+          selectedPlace={this.state.selected}
+          selectFeature={(f: TFeature) => () => {
+            if (f.geometry.type === 'Point') {
+              this.selectPoint(f)
+            } else if (f.geometry.type === 'Polygon') {
+              this.selectPolygon(f)
+            }
+          }}
+        />
       </div>
     )
   }
