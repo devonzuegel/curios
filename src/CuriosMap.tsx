@@ -5,10 +5,7 @@ import {throttle} from 'lodash'
 import ReactMapboxGl, {GeoJSONLayer} from 'react-mapbox-gl'
 import {MapEvent} from 'react-mapbox-gl/lib/map'
 
-import {points, polygons} from './data'
-
 const Map = ReactMapboxGl({
-  // TODO: extract into config
   accessToken:
     'pk.eyJ1IjoiZGV2b256dWVnZWwiLCJhIjoickpydlBfZyJ9.wEHJoAgO0E_tg4RhlMSDvA',
 })
@@ -19,7 +16,12 @@ type TState = {
   selected?: string
 }
 
-class CuriosMap extends React.Component<{}, TState> {
+type TProps = {
+  points: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject>
+  polygons: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject>
+}
+
+class CuriosMap extends React.Component<TProps, TState> {
   state: TState = {center: [-122.4194, 37.7749], zoom: [12]}
 
   private boundsChanged: MapEvent = throttle(
@@ -68,6 +70,7 @@ class CuriosMap extends React.Component<{}, TState> {
 
   public render() {
     const darkBlue = '#15232c'
+    const data = [...this.props.points.features, ...this.props.polygons.features]
     return (
       <div>
         <div id="map" className="map pad2">
@@ -81,7 +84,7 @@ class CuriosMap extends React.Component<{}, TState> {
             containerStyle={{height: '100%', width: '100%'}}
           >
             <GeoJSONLayer
-              data={points}
+              data={this.props.points}
               circleOnClick={this.onPointClick}
               circleLayout={{visibility: 'visible'}}
               circlePaint={{
@@ -108,7 +111,7 @@ class CuriosMap extends React.Component<{}, TState> {
               }}
             />
             <GeoJSONLayer
-              data={polygons}
+              data={this.props.polygons}
               fillOnClick={this.onPolygonClick}
               fillPaint={{
                 'fill-outline-color': '#ffffff',
@@ -134,7 +137,7 @@ class CuriosMap extends React.Component<{}, TState> {
         </div>
 
         <div className="sidebar">
-          {[...points.features, ...polygons.features].map((feature, k) => {
+          {data.map((feature, k) => {
             const selected = feature.properties.place === this.state.selected
             return (
               <div
