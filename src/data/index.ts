@@ -1,7 +1,7 @@
 import salesforceTower from './salesforceTower'
 import centralSubway from './centralSubway'
 
-export const points: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject> = {
+const data: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject> = {
   type: 'FeatureCollection',
   features: [
     {
@@ -15,12 +15,6 @@ export const points: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject> = {
         coordinates: salesforceTower.locations[0].coordinates,
       },
     },
-  ],
-}
-
-export const polygons: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject> = {
-  type: 'FeatureCollection',
-  features: [
     {
       type: 'Feature',
       properties: {
@@ -45,3 +39,5 @@ export const polygons: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject> =
     },
   ],
 }
+
+export default data

@@ -10,6 +10,8 @@ const Map = ReactMapboxGl({
     'pk.eyJ1IjoiZGV2b256dWVnZWwiLCJhIjoickpydlBfZyJ9.wEHJoAgO0E_tg4RhlMSDvA',
 })
 
+type TCollection = GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject>
+
 type TState = {
   zoom: number[]
   center: number[]
@@ -17,8 +19,7 @@ type TState = {
 }
 
 type TProps = {
-  points: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject>
-  polygons: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject>
+  data: TCollection
 }
 
 class CuriosMap extends React.Component<TProps, TState> {
@@ -41,6 +42,7 @@ class CuriosMap extends React.Component<TProps, TState> {
       zoom: [15],
     })
   }
+
   private selectPolygon = (feat: GeoJSON.Feature<GeoJSON.DirectGeometryObject>) => {
     if (this.state.selected === feat.properties.place) {
       this.setState({selected: undefined})
@@ -60,17 +62,70 @@ class CuriosMap extends React.Component<TProps, TState> {
     })
   }
 
-  private onPointClick = (
-    e: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject>
-  ) => this.selectPoint(e.features[0])
-
-  private onPolygonClick = (
-    e: GeoJSON.FeatureCollection<GeoJSON.DirectGeometryObject>
-  ) => this.selectPolygon(e.features[0])
-
-  public render() {
+  private featureLayer = (f: GeoJSON.Feature<GeoJSON.DirectGeometryObject>) => {
     const darkBlue = '#15232c'
-    const data = [...this.props.points.features, ...this.props.polygons.features]
+    if (f.geometry.type == 'Point') {
+      return (
+        <GeoJSONLayer
+          data={f}
+          circleOnClick={({features}: TCollection) => this.selectPoint(features[0])}
+          circleLayout={{visibility: 'visible'}}
+          circlePaint={{
+            'circle-radius': {stops: [[12, 2], [15, 5]]},
+            'circle-color': darkBlue,
+            'circle-stroke-width': 1,
+            'circle-stroke-color': darkBlue,
+            'circle-stroke-opacity': 0.6,
+          }}
+          symbolLayout={{
+            'text-padding': 100,
+            'icon-padding': 100,
+            'text-field': {stops: [[13, ''], [14, '{place}']]},
+            'text-letter-spacing': 0.05,
+            'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+            'text-offset': [0, 0.4],
+            'text-anchor': 'top',
+          }}
+          symbolPaint={{
+            'text-color': darkBlue,
+            'text-halo-color': 'white',
+            'text-halo-width': 2,
+            'text-halo-blur': 1,
+          }}
+        />
+      )
+    }
+    if (f.geometry.type === 'Polygon') {
+      return (
+        <GeoJSONLayer
+          data={f}
+          fillOnClick={({features}: TCollection) => this.selectPolygon(f)}
+          fillPaint={{
+            'fill-outline-color': '#ffffff',
+            'fill-color': darkBlue,
+            'fill-opacity': {stops: [[13, 0.1], [14, 0.2]]},
+          }}
+          symbolLayout={{
+            'text-padding': 100,
+            'icon-padding': 100,
+            'text-field': {stops: [[13, ''], [14, '{place}']]},
+            'text-letter-spacing': 0.05,
+            'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+            'text-anchor': 'top',
+          }}
+          symbolPaint={{
+            'text-color': darkBlue,
+            'text-halo-color': 'white',
+            'text-halo-width': 2,
+            'text-halo-blur': 1,
+          }}
+        />
+      )
+    }
+    return null
+  }
+  public render() {
+    const features = this.props.data.features
     return (
       <div>
         <div id="map" className="map pad2">
@@ -83,61 +138,13 @@ class CuriosMap extends React.Component<TProps, TState> {
             style="mapbox://styles/devonzuegel/cj8qgke1p5m932rpmjkmuup3u"
             containerStyle={{height: '100%', width: '100%'}}
           >
-            <GeoJSONLayer
-              data={this.props.points}
-              circleOnClick={this.onPointClick}
-              circleLayout={{visibility: 'visible'}}
-              circlePaint={{
-                'circle-radius': {stops: [[12, 2], [15, 5]]},
-                'circle-color': darkBlue,
-                'circle-stroke-width': 1,
-                'circle-stroke-color': darkBlue,
-                'circle-stroke-opacity': 0.6,
-              }}
-              symbolLayout={{
-                'text-padding': 100,
-                'icon-padding': 100,
-                'text-field': {stops: [[13, ''], [14, '{place}']]},
-                'text-letter-spacing': 0.05,
-                'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-                'text-offset': [0, 0.4],
-                'text-anchor': 'top',
-              }}
-              symbolPaint={{
-                'text-color': darkBlue,
-                'text-halo-color': 'white',
-                'text-halo-width': 2,
-                'text-halo-blur': 1,
-              }}
-            />
-            <GeoJSONLayer
-              data={this.props.polygons}
-              fillOnClick={this.onPolygonClick}
-              fillPaint={{
-                'fill-outline-color': '#ffffff',
-                'fill-color': darkBlue,
-                'fill-opacity': {stops: [[13, 0.1], [14, 0.2]]},
-              }}
-              symbolLayout={{
-                'text-padding': 100,
-                'icon-padding': 100,
-                'text-field': {stops: [[13, ''], [14, '{place}']]},
-                'text-letter-spacing': 0.05,
-                'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-                'text-anchor': 'top',
-              }}
-              symbolPaint={{
-                'text-color': darkBlue,
-                'text-halo-color': 'white',
-                'text-halo-width': 2,
-                'text-halo-blur': 1,
-              }}
+            {features.map(this.featureLayer)}
             />
           </Map>
         </div>
 
         <div className="sidebar">
-          {data.map((feature, k) => {
+          {features.map((feature, k) => {
             const selected = feature.properties.place === this.state.selected
             return (
               <div
