@@ -23,6 +23,10 @@ pre {
   bottom: 0;
 }
 
+.mapboxgl-ctrl-attrib {
+  display: none;
+}
+
 .sidebar {
   border-right: 2px solid white;
   background-color: #ffffff;
