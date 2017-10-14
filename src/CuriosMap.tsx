@@ -135,7 +135,7 @@ class CuriosMap extends React.Component<TProps, TState> {
             onMove={this.boundsChanged}
             zoom={this.state.zoom}
             center={this.state.center}
-            style="mapbox://styles/devonzuegel/cj8qgke1p5m932rpmjkmuup3u"
+            style="mapbox://styles/devonzuegel/cj8rx2ti3aw2z2rnzhwwy3bvp"
             containerStyle={{height: '100%', width: '100%'}}
           >
             {features.map(this.featureLayer)}
