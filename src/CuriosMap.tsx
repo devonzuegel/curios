@@ -64,7 +64,7 @@ class CuriosMap extends React.Component<TProps, TState> {
 
   private featureLayer = (f: GeoJSON.Feature<GeoJSON.DirectGeometryObject>) => {
     const darkBlue = '#15232c'
-    if (f.geometry.type == 'Point') {
+    if (f.geometry.type === 'Point') {
       return (
         <GeoJSONLayer
           data={f}
