@@ -104,6 +104,7 @@ class CuriosMap extends React.Component<{data: TCollection}, TState> {
       if (features.length > 0) {
         this.zoomToFeature(features[0] as TFeature)
       }
+      console.log(e.point)
     })
   }
 
