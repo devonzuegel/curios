@@ -1,27 +1,22 @@
 import * as React from 'react'
 import * as MapboxGl from 'mapbox-gl'
+import ReactMapboxGl from 'react-mapbox-gl'
 import {throttle} from 'lodash'
 import {MapEvent} from 'react-mapbox-gl/lib/map'
-import ReactMapboxGl from 'react-mapbox-gl'
 
 import {TFeature, TCollection} from './features.d'
 import Sidebar from './Sidebar'
 import Point from './Point'
 import Polygon from './Polygon'
 
-const Map = ReactMapboxGl({
-  accessToken:
-    'pk.eyJ1IjoiZGV2b256dWVnZWwiLCJhIjoickpydlBfZyJ9.wEHJoAgO0E_tg4RhlMSDvA',
-})
+type TProps = {
+  data: TCollection
+}
 
 type TState = {
   zoom: number[]
   center: number[]
   selected?: string
-}
-
-type TProps = {
-  data: TCollection
 }
 
 class CuriosMap extends React.Component<TProps, TState> {
@@ -31,6 +26,10 @@ class CuriosMap extends React.Component<TProps, TState> {
   polygonZoom = [14]
   style = 'mapbox://styles/devonzuegel/cj8rx2ti3aw2z2rnzhwwy3bvp'
   color = '#15232c'
+  Map = ReactMapboxGl({
+    accessToken:
+      'pk.eyJ1IjoiZGV2b256dWVnZWwiLCJhIjoickpydlBfZyJ9.wEHJoAgO0E_tg4RhlMSDvA',
+  })
 
   state: TState = {
     center: this.initialCenter, // Centered on SF
@@ -88,7 +87,7 @@ class CuriosMap extends React.Component<TProps, TState> {
     return (
       <div>
         <div id="map" className="map pad2">
-          <Map
+          <this.Map
             onClick={() => this.setState({selected: undefined})}
             onZoom={this.boundsChanged}
             onMove={this.boundsChanged}
@@ -99,18 +98,15 @@ class CuriosMap extends React.Component<TProps, TState> {
           >
             {this.props.data.features.map(this.featureLayer)}
             />
-          </Map>
+          </this.Map>
         </div>
 
         <Sidebar
           features={this.props.data.features}
           selectedPlace={this.state.selected}
           selectFeature={(f: TFeature) => () => {
-            if (f.geometry.type === 'Point') {
-              this.selectPoint(f)
-            } else if (f.geometry.type === 'Polygon') {
-              this.selectPolygon(f)
-            }
+            if (f.geometry.type === 'Point') this.selectPoint(f)
+            if (f.geometry.type === 'Polygon') this.selectPolygon(f)
           }}
         />
       </div>
