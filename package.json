@@ -9,13 +9,11 @@
     "classnames": "^2.2.5",
     "husky": "^0.14.3",
     "lint-staged": "^4.2.3",
-    "lodash": "^4.17.4",
     "mapbox-gl": "^0.40.1",
     "prettier": "^1.7.4",
     "ramda": "^0.25.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-mapbox-gl": "^2.7.0",
     "react-scripts-ts": "2.7.0"
   },
   "lint-staged": {

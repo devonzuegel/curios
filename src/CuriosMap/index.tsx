@@ -1,17 +1,12 @@
 import * as React from 'react'
-import * as MapboxGl from 'mapbox-gl'
-import ReactMapboxGl from 'react-mapbox-gl'
-import {throttle} from 'lodash'
-import {MapEvent} from 'react-mapbox-gl/lib/map'
+import * as TMapboxGl from 'mapbox-gl' // Import this for the types...
+const MapboxGl = require('mapbox-gl') // ... bc types are broken for this
 
-import {TFeature, TCollection} from './features.d'
+import {TFeature, TCollection, TCoord} from './features.d'
 import Sidebar from './Sidebar'
-import Point from './Point'
-import Polygon from './Polygon'
 
-type TProps = {
-  data: TCollection
-}
+MapboxGl.accessToken =
+  'pk.eyJ1IjoiZGV2b256dWVnZWwiLCJhIjoickpydlBfZyJ9.wEHJoAgO0E_tg4RhlMSDvA'
 
 type TState = {
   zoom: number[]
@@ -19,98 +14,111 @@ type TState = {
   selected?: string
 }
 
-class CuriosMap extends React.Component<TProps, TState> {
-  initialCenter = [-122.4194, 37.7749]
+class CuriosMap extends React.Component<{data: TCollection}, TState> {
+  initialCenter = [-122.4194, 37.7749] // Centered on SF
   initialZoom = [12]
   pointZoom = [15]
   polygonZoom = [14]
   style = 'mapbox://styles/devonzuegel/cj8rx2ti3aw2z2rnzhwwy3bvp'
   color = '#15232c'
-  Map = ReactMapboxGl({
-    accessToken:
-      'pk.eyJ1IjoiZGV2b256dWVnZWwiLCJhIjoickpydlBfZyJ9.wEHJoAgO0E_tg4RhlMSDvA',
-  })
+  data = this.props.data
+  pointFeaturesNames = 'point-features'
+  polygonFeaturesNames = 'polygon-features'
 
   state: TState = {
-    center: this.initialCenter, // Centered on SF
+    center: this.initialCenter,
     zoom: this.initialZoom,
   }
 
-  private boundsChanged: MapEvent = throttle(
-    (map: MapboxGl.Map): void => this.setState({center: map.getCenter().toArray()}),
-    500,
-    {leading: true}
-  )
+  map: TMapboxGl.Map
+  layers: TMapboxGl.Layer[] = [
+    {
+      type: 'symbol',
+      id: 'labels',
+      source: 'features',
+      layout: {
+        'text-field': {stops: [[12, ''], [14, '{place}']]},
+        'text-letter-spacing': 0.05,
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'text-offset': [0, 0.4],
+        'text-anchor': 'top',
+      },
+    },
+    {
+      id: this.polygonFeaturesNames,
+      type: 'fill',
+      source: 'features',
+      paint: {
+        'fill-color': this.color,
+        'fill-outline-color': this.color,
+        'fill-opacity': 0.3,
+      },
+      filter: ['==', '$type', 'Polygon'],
+    },
+    {
+      id: this.pointFeaturesNames,
+      type: 'circle',
+      source: 'features',
+      paint: {
+        'circle-radius': {stops: [[12, 1], [15, 5]]},
+        'circle-color': this.color,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': this.color,
+        'circle-stroke-opacity': {stops: [[12, 0.25], [15, 0.3]]},
+      },
+      filter: ['==', '$type', 'Point'],
+    },
+  ]
 
-  private selectPoint = (feat: TFeature) => {
-    if (this.state.selected === feat.properties.place) {
-      this.setState({selected: undefined})
-      return
+  private zoomToFeature = (feat: TFeature) => {
+    if (feat.geometry.type === 'Point') {
+      this.map.flyTo({
+        center: feat.geometry.coordinates as TCoord,
+        zoom: 15,
+      })
     }
-    this.setState({
-      selected: feat.properties.place,
-      center: feat.geometry.coordinates as number[], // TODO: This coercion may cause problems
-      zoom: this.pointZoom,
+    if (feat.geometry.type === 'Polygon') {
+      const bounds = new MapboxGl.LngLatBounds()
+      const coords = feat.geometry.coordinates[0] as TCoord[]
+      coords.forEach(([lng, lat]) => bounds.extend(new MapboxGl.LngLat(lng, lat)))
+      this.map.fitBounds(bounds)
+    }
+  }
+
+  componentDidMount() {
+    this.map = new MapboxGl.Map({
+      container: 'map',
+      style: this.style,
+      center: this.initialCenter,
+      zoom: this.initialZoom,
+    })
+    this.map.on('load', () => {
+      this.map.addSource('features', {type: 'geojson', data: this.props.data})
+      this.layers.map(l => this.map.addLayer(l))
+    })
+    this.map.on('click', (e: {point: TMapboxGl.Point; lngLat: TMapboxGl.LngLat}) => {
+      const features = this.map.queryRenderedFeatures(e.point, {
+        layers: [this.pointFeaturesNames, this.polygonFeaturesNames],
+      })
+      if (features.length > 0) {
+        this.zoomToFeature(features[0] as TFeature)
+      }
     })
   }
 
-  private selectPolygon = (feat: TFeature) => {
-    if (this.state.selected === feat.properties.place) {
-      this.setState({selected: undefined})
-      return
-    }
-    const bounds = new MapboxGl.LngLatBounds()
-    // TODO: This coercion may cause problems
-    ;(feat.geometry.coordinates as [number, number][]).forEach(coordPair => {
-      const latLng = new MapboxGl.LngLat(coordPair[0][0], coordPair[0][1])
-      bounds.extend(latLng)
-    })
-    // map.fitBounds(bounds)
-    this.setState({
-      selected: feat.properties.place,
-      center: bounds.getCenter().toArray(),
-      zoom: this.polygonZoom,
-    })
-  }
-
-  private featureLayer = (feature: TFeature, i: number) => {
-    const props = {feature, color: this.color, key: i}
-    if (feature.geometry.type === 'Point') {
-      return <Point onClick={this.selectPoint} {...props} />
-    }
-    if (feature.geometry.type === 'Polygon') {
-      return <Polygon onClick={this.selectPolygon} {...props} />
-    }
-    return null
-  }
-
-  public render() {
+  render() {
     return (
       <div>
-        <div id="map" className="map pad2">
-          <this.Map
-            onClick={() => this.setState({selected: undefined})}
-            onZoom={this.boundsChanged}
-            onMove={this.boundsChanged}
-            zoom={this.state.zoom}
-            center={this.state.center}
-            style={this.style}
-            containerStyle={{height: '100%', width: '100%'}}
-          >
-            {this.props.data.features.map(this.featureLayer)}
-          </this.Map>
-        </div>
-
+        <div id="map" className="map pad2" />
         <Sidebar
           features={this.props.data.features}
           selectedPlace={this.state.selected}
           selectFeature={(f: TFeature) => () => {
-            if (f.geometry.type === 'Point') {
-              this.selectPoint(f)
-            }
-            if (f.geometry.type === 'Polygon') {
-              this.selectPolygon(f)
-            }
+            const alreadySelected = this.state.selected === f.properties.place
+            this.setState({
+              selected: alreadySelected ? undefined : f.properties.place,
+            })
+            this.zoomToFeature(f)
           }}
         />
       </div>
