@@ -18,20 +18,20 @@ type TState = {
   zoom: number[]
   center: number[]
   selected?: string
-  style: string
 }
 
 type TProps = {
   data: TCollection
 }
-const darkBlue = '#15232c'
 
 class CuriosMap extends React.Component<TProps, TState> {
   state: TState = {
-    center: [-122.4194, 37.7749],
+    center: [-122.4194, 37.7749], // Centered on SF
     zoom: [12],
-    style: 'mapbox://styles/devonzuegel/cj8rx2ti3aw2z2rnzhwwy3bvp',
   }
+
+  style: string = 'mapbox://styles/devonzuegel/cj8rx2ti3aw2z2rnzhwwy3bvp'
+  featureColor: string = '#15232c'
 
   private boundsChanged: MapEvent = throttle(
     (map: MapboxGl.Map): void => this.setState({center: map.getCenter().toArray()}),
@@ -72,13 +72,22 @@ class CuriosMap extends React.Component<TProps, TState> {
 
   private featureLayer = (f: TFeature) => {
     if (f.geometry.type === 'Point') {
-      return <Point onClick={this.selectPoint} feature={f} color={darkBlue} />
+      return (
+        <Point onClick={this.selectPoint} feature={f} color={this.featureColor} />
+      )
     }
     if (f.geometry.type === 'Polygon') {
-      return <Polygon onClick={this.selectPolygon} feature={f} color={darkBlue} />
+      return (
+        <Polygon
+          onClick={this.selectPolygon}
+          feature={f}
+          color={this.featureColor}
+        />
+      )
     }
     return null
   }
+
   public render() {
     return (
       <div>
@@ -89,7 +98,7 @@ class CuriosMap extends React.Component<TProps, TState> {
             onMove={this.boundsChanged}
             zoom={this.state.zoom}
             center={this.state.center}
-            style={this.state.style}
+            style={this.style}
             containerStyle={{height: '100%', width: '100%'}}
           >
             {this.props.data.features.map(this.featureLayer)}
