@@ -97,7 +97,6 @@ class CuriosMap extends React.Component<TProps, TState> {
             containerStyle={{height: '100%', width: '100%'}}
           >
             {this.props.data.features.map(this.featureLayer)}
-            />
           </this.Map>
         </div>
 
