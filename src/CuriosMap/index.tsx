@@ -73,12 +73,13 @@ class CuriosMap extends React.Component<TProps, TState> {
     })
   }
 
-  private featureLayer = (f: TFeature) => {
-    if (f.geometry.type === 'Point') {
-      return <Point onClick={this.selectPoint} feature={f} color={this.color} />
+  private featureLayer = (feature: TFeature, i: number) => {
+    const props = {feature, color: this.color, key: i}
+    if (feature.geometry.type === 'Point') {
+      return <Point onClick={this.selectPoint} {...props} />
     }
-    if (f.geometry.type === 'Polygon') {
-      return <Polygon onClick={this.selectPolygon} feature={f} color={this.color} />
+    if (feature.geometry.type === 'Polygon') {
+      return <Polygon onClick={this.selectPolygon} {...props} />
     }
     return null
   }
@@ -104,8 +105,12 @@ class CuriosMap extends React.Component<TProps, TState> {
           features={this.props.data.features}
           selectedPlace={this.state.selected}
           selectFeature={(f: TFeature) => () => {
-            if (f.geometry.type === 'Point') this.selectPoint(f)
-            if (f.geometry.type === 'Polygon') this.selectPolygon(f)
+            if (f.geometry.type === 'Point') {
+              this.selectPoint(f)
+            }
+            if (f.geometry.type === 'Polygon') {
+              this.selectPolygon(f)
+            }
           }}
         />
       </div>
