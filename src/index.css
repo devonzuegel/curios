@@ -23,6 +23,10 @@ pre {
   bottom: 0;
 }
 
+.map canvas:focus {
+  outline: none;
+}
+
 .mapboxgl-ctrl-attrib {
   display: none;
 }

@@ -7,4 +7,5 @@ import './index.css'
 
 const root = document.getElementById('root') as HTMLElement
 ReactDOM.render(<CuriosMap data={data} />, root)
+
 registerServiceWorker()
