@@ -21,10 +21,13 @@ class CuriosMap extends React.Component<{data: TCollection}, TState> {
   pointZoom = [15]
   polygonZoom = [14]
   style = 'mapbox://styles/devonzuegel/cj8rx2ti3aw2z2rnzhwwy3bvp'
-  color = '#15232c'
+  color = 'rgba(21, 69, 103, 1)'
   data = this.props.data
+  labelNames = 'labels'
   pointFeaturesNames = 'point-features'
+  pointFeaturesNamesHover = 'point-features-hover'
   polygonFeaturesNames = 'polygon-features'
+  polygonFeaturesNamesHover = 'polygon-features-hover'
 
   state: TState = {
     center: this.initialCenter,
@@ -34,40 +37,76 @@ class CuriosMap extends React.Component<{data: TCollection}, TState> {
   map: TMapboxGl.Map
   layers: TMapboxGl.Layer[] = [
     {
-      type: 'symbol',
-      id: 'labels',
-      source: 'features',
-      layout: {
-        'text-field': {stops: [[12, ''], [14, '{place}']]},
-        'text-letter-spacing': 0.05,
-        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-        'text-offset': [0, 0.4],
-        'text-anchor': 'top',
-      },
-    },
-    {
       id: this.polygonFeaturesNames,
       type: 'fill',
       source: 'features',
       paint: {
         'fill-color': this.color,
         'fill-outline-color': this.color,
-        'fill-opacity': 0.3,
+        'fill-opacity': {stops: [[12, 0.25], [15, 0.35]]},
       },
       filter: ['==', '$type', 'Polygon'],
+    },
+    {
+      id: this.polygonFeaturesNamesHover,
+      type: 'fill',
+      source: 'features',
+      paint: {
+        'fill-color': this.color,
+        'fill-outline-color': this.color,
+        'fill-opacity': 0.1,
+      },
+      filter: [
+        'all',
+        ['==', '$type', 'Polygon'],
+        ['==', 'place', ''], // Hover filter (start with no hover)
+      ],
     },
     {
       id: this.pointFeaturesNames,
       type: 'circle',
       source: 'features',
       paint: {
-        'circle-radius': {stops: [[12, 1], [15, 5]]},
+        'circle-radius': {stops: [[12, 1], [15, 4]]},
         'circle-color': this.color,
         'circle-stroke-width': 1,
         'circle-stroke-color': this.color,
-        'circle-stroke-opacity': {stops: [[12, 0.25], [15, 0.3]]},
+        'circle-stroke-opacity': 0.4,
+        'circle-opacity': 0.3,
       },
       filter: ['==', '$type', 'Point'],
+    },
+    {
+      id: this.pointFeaturesNamesHover,
+      type: 'circle',
+      source: 'features',
+      paint: {
+        'circle-opacity': 0.1,
+      },
+      filter: [
+        'all',
+        ['==', '$type', 'Point'],
+        ['==', 'place', ''], // Hover filter (start with no hover)
+      ],
+    },
+    {
+      type: 'symbol',
+      id: 'labels',
+      source: 'features',
+      paint: {
+        'text-color': this.color,
+        'text-halo-width': 1,
+        'text-halo-color': 'rgba(255, 255, 255, 1)',
+        'icon-halo-blur': 4,
+      },
+      layout: {
+        'text-size': {stops: [[14, 13], [15, 20]]},
+        'text-field': {stops: [[12, ''], [14, '{place}']]},
+        'text-letter-spacing': 0.05,
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'text-offset': [0, 0.4],
+        'text-anchor': 'top',
+      },
     },
   ]
 
@@ -86,6 +125,15 @@ class CuriosMap extends React.Component<{data: TCollection}, TState> {
     }
   }
 
+  private getOverlappingFeatures = (point: TMapboxGl.Point) => {
+    const layers = [
+      this.pointFeaturesNames,
+      this.polygonFeaturesNames,
+      this.labelNames,
+    ]
+    return this.map.queryRenderedFeatures(point, {layers})
+  }
+
   componentDidMount() {
     this.map = new MapboxGl.Map({
       container: 'map',
@@ -96,15 +144,30 @@ class CuriosMap extends React.Component<{data: TCollection}, TState> {
     this.map.on('load', () => {
       this.map.addSource('features', {type: 'geojson', data: this.props.data})
       this.layers.map(l => this.map.addLayer(l))
-    })
-    this.map.on('click', (e: {point: TMapboxGl.Point; lngLat: TMapboxGl.LngLat}) => {
-      const features = this.map.queryRenderedFeatures(e.point, {
-        layers: [this.pointFeaturesNames, this.polygonFeaturesNames],
+      this.map.on('click', (e: TMapboxGl.MapMouseEvent) => {
+        const features = this.getOverlappingFeatures(e.point)
+        if (features.length > 0) {
+          this.zoomToFeature(features[0] as TFeature)
+        } else {
+          console.log(e.point) // TODO: Create new features in the future
+        }
       })
-      if (features.length > 0) {
-        this.zoomToFeature(features[0] as TFeature)
-      }
-      console.log(e.point)
+      this.map.on('mousemove', (e: TMapboxGl.MapMouseEvent) => {
+        const features = this.getOverlappingFeatures(e.point)
+        const featurePlaceName =
+          features.length === 0 ? '' : features[0].properties.place
+
+        this.map.setFilter(this.polygonFeaturesNamesHover, [
+          '==',
+          'place',
+          featurePlaceName,
+        ])
+        this.map.setFilter(this.pointFeaturesNamesHover, [
+          'all',
+          ['==', 'place', featurePlaceName],
+          ['==', '$type', 'Point'],
+        ])
+      })
     })
   }
 

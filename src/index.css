@@ -15,9 +15,10 @@ pre {
 }
 
 .map {
+  cursor: pointer;
   left: calc(25% + 2px); /* Make room for sidebar's border */
   width: calc(75% - 2px);
-  transition: all 0.05s ease-out;
+  transition: all 0.075s ease-out;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -39,33 +40,32 @@ pre {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ced2d5' fill-opacity='.5' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
   width: 25%;
   overflow: scroll;
-  box-shadow: rgba(48, 95, 129, 0.1) 5px 5px 30px 0px;
+  box-shadow: rgba(21, 69, 103, 0.1) 5px 5px 30px 0px;
   height: 100vh;
-  transition: all 0.05s ease-out;
+  transition: all 0.075s ease-out;
 }
 
 .sidebar.feature-selected {
   width: 40%;
-  transition: width 0.05s ease-out;
+  transition: width 0.075s ease-out;
 }
 
 .listing {
   font-weight: 600;
-  margin: 8px 0;
+  margin: 8px;
   padding: 18px;
   background: rgba(255, 255, 255, 0.85);
-  color: rgba(48, 95, 129, 0.6);
-  border-top: 1px solid rgba(48, 95, 129, 0.05);
-  border-bottom: 1px solid rgba(48, 95, 129, 0.05);
-  box-shadow: rgba(48, 95, 129, 0.05) 5px 5px 30px 0px;
-  transition: all 0.05s ease-out;
+  color: rgba(21, 69, 103, 0.6);
+  border: 1px solid rgba(21, 69, 103, 0.075);
+  box-shadow: rgba(21, 69, 103, 0.075) 5px 5px 30px 0px;
+  transition: all 0.075s ease-out;
 }
 
 .listing:hover,
 .selected {
   background: rgba(255, 255, 255, 1);
-  color: rgba(48, 95, 129, 1);
-  box-shadow: rgba(48, 95, 129, 0.08) 5px 5px 30px 0px;
+  color: rgba(21, 69, 103, 1);
+  box-shadow: rgba(21, 69, 103, 0.1) 5px 5px 30px 0px;
   cursor: pointer;
-  transition: all 0.05s ease-out;
+  transition: all 0.075s ease-out;
 }
