@@ -8,7 +8,12 @@ const Sidebar = (props: {
   selectFeature: (f: TFeature) => () => void
   selectedPlace?: string
 }) => (
-  <div className="sidebar">
+  <div
+    className={classnames({
+      sidebar: true,
+      'feature-selected': !!props.selectedPlace,
+    })}
+  >
     {props.features.map((f: TFeature, k) => {
       const selected = f.properties.place === props.selectedPlace
       return (

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as classnames from 'classnames'
 import * as TMapboxGl from 'mapbox-gl' // Import this for the types...
 const MapboxGl = require('mapbox-gl') // ... bc types are broken for this
 
@@ -109,7 +110,13 @@ class CuriosMap extends React.Component<{data: TCollection}, TState> {
   render() {
     return (
       <div>
-        <div id="map" className="map pad2" />
+        <div
+          id="map"
+          className={classnames({
+            map: true,
+            'feature-selected': !!this.state.selected,
+          })}
+        />
         <Sidebar
           features={this.props.data.features}
           selectedPlace={this.state.selected}
