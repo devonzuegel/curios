@@ -80,7 +80,7 @@ pre {
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  margin: -4px;
+  margin: 4px -4px;
 }
 
 .gallery .picture {

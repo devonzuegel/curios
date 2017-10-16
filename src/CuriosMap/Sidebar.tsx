@@ -40,12 +40,16 @@ const Sidebar = (props: {
           key={k}
         >
           <b>{f.properties.place}</b>
-          {selected && (
-            <pre>
-              <Gallery urls={project.mediaUrls} />
-              {JSON.stringify(f.properties, null, 2)}
-            </pre>
-          )}
+
+          <div
+            style={{
+              visibility: selected ? '' : 'hidden',
+              height: selected ? 'auto' : 0,
+            }}
+          >
+            <Gallery urls={project.mediaUrls} />
+            <pre>{JSON.stringify(f.properties, null, 2)}</pre>
+          </div>
         </div>
       )
     })}
