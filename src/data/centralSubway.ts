@@ -68,10 +68,11 @@ const centralSubway: TProject = {
     // Chinatown politics?
   ],
   mediaUrls: [
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/' +
-      'Salesforce_Tower_during_construction%2C_January_2017.jpg/' +
-      '1920px-Salesforce_Tower_during_construction%2C_January_2017.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/a/a3/Salesforce_Tower_April_2017.jpg',
+    'https://static1.squarespace.com/static/51cc800be4b014f2c6e558f2' +
+      '/533c8ac5e4b0b959d0e9af44/533c8b92e4b0cffc81fb2d15/1396476943674' +
+      '/central+subway+map.jpg',
+    'https://mtc.ca.gov/sites/default/files/images/photos/CentralSubway11_Large.jpg',
+    'https://cbssanfran.files.wordpress.com/2017/07/central-subway-construction.jpg?w=1280',
   ],
   resourceUrls: ['https://en.wikipedia.org/wiki/Salesforce_Tower'],
 }

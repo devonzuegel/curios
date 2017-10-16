@@ -2,6 +2,22 @@ import * as React from 'react'
 import * as classnames from 'classnames'
 
 import {TFeature} from './features.d'
+import {TProject} from '../data/project.d'
+
+const Gallery = ({urls}: {urls: string[]}) => (
+  <div className="gallery">
+    {urls.map((url, i: number) => (
+      <div
+        key={i}
+        className="picture"
+        style={{
+          background: `url(${url}) no-repeat center center`,
+          backgroundSize: 'cover',
+        }}
+      />
+    ))}
+  </div>
+)
 
 const Sidebar = (props: {
   features: TFeature[]
@@ -16,14 +32,20 @@ const Sidebar = (props: {
   >
     {props.features.map((f: TFeature, k) => {
       const selected = f.properties.place === props.selectedPlace
+      const project: TProject = f.properties
       return (
         <div
           className={classnames({listing: true, selected})}
           onClick={props.selectFeature(f)}
           key={k}
         >
-          {f.properties.place}
-          {selected && <pre>{JSON.stringify(f.properties, null, 2)}</pre>}
+          <b>{f.properties.place}</b>
+          {selected && (
+            <pre>
+              <Gallery urls={project.mediaUrls} />
+              {JSON.stringify(f.properties, null, 2)}
+            </pre>
+          )}
         </div>
       )
     })}

@@ -16,13 +16,16 @@ pre {
 
 .map {
   cursor: pointer;
-  left: calc(25% + 2px); /* Make room for sidebar's border */
-  width: calc(75% - 2px);
+  left: calc(25vw + 2px); /* Make room for sidebar's border */
   transition: all 0.075s ease-out;
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 100%;
+  right: 0;
+}
+
+.map canvas {
+  width: calc(100% - 2px) !important;
 }
 
 .map canvas:focus {
@@ -68,4 +71,24 @@ pre {
   box-shadow: rgba(21, 69, 103, 0.1) 5px 5px 30px 0px;
   cursor: pointer;
   transition: all 0.075s ease-out;
+}
+
+/****************************************************************************/
+/**** Gallery ***************************************************************/
+/****************************************************************************/
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -4px;
+}
+
+.gallery .picture {
+  border: 1px solid rgba(21, 69, 103, 0.25);
+  margin: 4px;
+  height: 250px;
+  min-width: 18%;
+  flex: 1;
+  min-width: 18%;
+  overflow: hidden;
 }

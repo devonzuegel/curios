@@ -26,6 +26,10 @@ const salesforceTower: TProject = {
       'Salesforce_Tower_during_construction%2C_January_2017.jpg/' +
       '1920px-Salesforce_Tower_during_construction%2C_January_2017.jpg',
     'https://upload.wikimedia.org/wikipedia/commons/a/a3/Salesforce_Tower_April_2017.jpg',
+    'http://www.salesforcetower.com/files/9813/9408/1712/Transbay_Tower_leasing_main_960.jpg',
+    'http://www.salesforcetower.com/files/2814/3275/4766/salesforce-tower-welcome-to-the-new-center-960-2.jpg',
+    'https://cdn2-img.pressreader.com/pressdisplay/docserver/getimage.aspx?' +
+      'regionKey=DaDQBIgjR1OPgqe3AqEVYg%3D%3D&scale=100',
   ],
   resourceUrls: ['https://en.wikipedia.org/wiki/Salesforce_Tower'],
 }
