@@ -1,0 +1,53 @@
+@import '../../variables.css';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: var(--spacing-small);
+  margin-bottom: var(--spacing-base);
+}
+
+.label {
+  text-align: left;
+  color: var(--grey3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label,
+.input {
+  margin: var(--spacing-xxsmall) 0;
+}
+
+.input {
+  border-radius: var(--spacing-xsmall);
+  padding: var(--spacing-small);
+  transition: var(--transition);
+  border-style: solid;
+  border: 1px solid var(--light-grey1);
+
+  &:focus {
+    transition: var(--transition);
+    border: 1px solid var(--grey3);
+    outline: none;
+  }
+}
+
+.error {
+  border: 1px solid color(var(--red) alpha(-50%));
+}
+
+.error:focus {
+  border: 1px solid var(--red);
+  background: color(var(--red) alpha(-97%));
+}
+
+.inline-note {
+  font-size: 0.7em;
+}
+
+.inline-error {
+  color: var(--red);
+  font-size: 0.7em;
+}

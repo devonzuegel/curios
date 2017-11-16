@@ -1,7 +1,7 @@
 {
   "extends": ["tslint-react"],
   "rules": {
-    "align": [true, "parameters", "arguments"],
+    "align": [true, "parameters"],
     "ban": false,
     "class-name": true,
     "comment-format": [true, "check-space"],
@@ -9,8 +9,9 @@
     "eofline": false,
     "forin": true,
     "indent": [true, "spaces"],
-    "interface-name": [true, "never-prefix"],
+    "interface-name": [true, "always-prefix"],
     "jsdoc-format": true,
+    "jsx-boolean-value": false,
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
     "label-position": true,
@@ -28,7 +29,7 @@
         ]
       }
     ],
-    "no-any": true,
+    "no-any": false,
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
@@ -48,7 +49,7 @@
     "no-empty": true,
     "no-eval": true,
     "no-shadowed-variable": true,
-    "no-string-literal": true,
+    "no-string-literal": false,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": false,
     "no-unused-expression": true,

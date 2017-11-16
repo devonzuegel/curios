@@ -1,0 +1,15 @@
+@import '../../variables.css';
+
+.wrapper {
+  text-align: center;
+  padding: var(--spacing-large);
+  max-width: 320px;
+  margin: auto;
+  font-family: var(--primary-font);
+}
+
+.disclaimer {
+  text-align: center;
+  font-size: var(--font-size-small);
+  color: var(--grey4);
+}
