@@ -1,0 +1,43 @@
+:root {
+  --blue: rgb(0, 132, 255);
+
+  --dark-grey1: #182026;
+  --dark-grey2: #202b33;
+  --dark-grey3: #293742;
+  --dark-grey4: #30404d;
+  --dark-grey5: #394b59;
+  --grey1: #5c7080;
+  --grey2: #738694;
+  --grey3: #8a9ba8;
+  --grey4: #a7b6c2;
+  --grey5: #bfccd6;
+  --light-grey1: #ced9e0;
+  --light-grey2: #d8e1e8;
+  --light-grey3: #e1e8ed;
+  --light-grey4: #ebf1f5;
+  --light-grey5: #f5f8fa;
+
+  --red: #ff4136;
+
+  --box-shadow: rgba(21, 69, 103, 0.2) 2px 2px 30px 0px;
+  --box-shadow-light: rgba(21, 69, 103, 0.2) 2px 2px 10px 0px;
+
+  --spacing: 16px;
+  --spacing-xxsmall: calc(var(--spacing) / 8);
+  --spacing-xsmall: calc(var(--spacing) / 4);
+  --spacing-small: calc(var(--spacing) / 2);
+  --spacing-base: calc(1 * var(--spacing));
+  --spacing-large: calc(2 * var(--spacing));
+  --spacing-xlarge: calc(3 * var(--spacing));
+  --spacing-xxlarge: calc(4 * var(--spacing));
+
+  --font-size-base: var(--spacing);
+  --font-size-small: 0.8em;
+
+  --transition: all 0.08s linear;
+
+  --monospace: 'Roboto Mono';
+  --accent-font: 'Roboto', -apple-system, system-ui, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', Icons16, sans-serif;
+  --primary-font: var(--accent-font);
+}
