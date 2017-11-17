@@ -6,6 +6,8 @@ type User @model {
   updatedAt: DateTime! # read-only (managed by Graphcool)
   facebookUserId: String @isUnique
   facebookEmail: String
+  facebookFirstName: String
+  facebookLastName: String
   posts: [Post!]! @relation(name: "UserPosts")
 }
 

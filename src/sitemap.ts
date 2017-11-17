@@ -1,5 +1,7 @@
 enum sitemap {
   home = '/',
+  auth = '/auth',
+  users = '/users',
   signin = '/signin',
   signup = '/signup',
   newOrganization = '/organizations/new',

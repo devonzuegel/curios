@@ -1,6 +1,8 @@
 type LoggedInUserPayload {
   # if `id` is `null`, it means there is not logged in user
   id: ID
+  facebookUserId: String
+  facebookFirstName: String
 }
 
 extend type Query {

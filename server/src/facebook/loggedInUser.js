@@ -4,11 +4,13 @@ function getUser(api, userId) {
   return api
     .request(
       `
-    query {
-      User(id: "${userId}"){
-        id
-      }
-    }`
+      query {
+        User(id: "${userId}"){
+          id
+          facebookUserId
+          facebookFirstName
+        }
+      }`
     )
     .then(userQueryResult => {
       console.log(userQueryResult)

@@ -10,9 +10,10 @@ module.exports = event => {
   const graphcool = fromEvent(event)
   const api = graphcool.api('simple/v1')
 
-  function getFacebookAccountData(facebookToken) {
+  function getFacebookAccountData(fbToken) {
+    const fields = ['id', 'email', 'first_name', 'last_name'].join('%2C')
     return fetch(
-      `https://graph.facebook.com/v2.9/me?fields=id%2Cemail&access_token=${facebookToken}`
+      `https://graph.facebook.com/v2.9/me?fields=${fields}&access_token=${fbToken}`
     )
       .then(response => response.json())
       .then(parsedResponse => {
@@ -29,11 +30,12 @@ module.exports = event => {
     return api
       .request(
         `
-    query {
-      User(facebookUserId: "${facebookUser.id}") {
-        id
-      }
-    }`
+        query {
+          User(facebookUserId: "${facebookUser.id}") {
+            id
+          }
+        }
+        `
       )
       .then(userQueryResult => {
         if (userQueryResult.error) {
@@ -48,14 +50,17 @@ module.exports = event => {
     return api
       .request(
         `
-      mutation {
-        createUser(
-          facebookUserId: "${facebookUser.id}"
-          facebookEmail: "${facebookUser.email}"
-        ) {
-          id
+        mutation {
+          createUser(
+            facebookUserId: "${facebookUser.id}"
+            facebookEmail: "${facebookUser.email}"
+            facebookFirstName: "${facebookUser.first_name}"
+            facebookLastName: "${facebookUser.last_name}"
+          ) {
+            id
+          }
         }
-      }`
+        `
       )
       .then(userMutationResult => {
         return userMutationResult.createUser.id
