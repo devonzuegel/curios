@@ -1,0 +1,8 @@
+@import '../../variables.css';
+
+.global-error {
+  color: var(--red);
+  font-size: 0.7em;
+  text-align: left;
+  margin: var(--spacing-small);
+}
