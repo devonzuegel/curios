@@ -9,6 +9,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const getClientEnvironment = require('./env')
 const paths = require('./paths')
+const {TsConfigPathsPlugin} = require('awesome-typescript-loader')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -82,23 +83,16 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: [
-      '.web.ts',
-      '.ts',
-      '.web.tsx',
-      '.tsx',
-      '.web.js',
-      '.js',
-      '.json',
-      '.web.jsx',
-      '.jsx',
-    ],
+    extensions: ['.ts', '.tsx', '.js', '.json', '.jsx'],
     alias: {
+      '~': paths.appSrc,
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
     },
     plugins: [
+      new TsConfigPathsPlugin /* { configFileName, compiler } */(),
+
       // Prevents users from importing files from outside of src/ (or node_modules/).
       // This often causes confusion because we only process files within src/ with babel.
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
@@ -148,7 +142,7 @@ module.exports = {
           {
             test: /\.(ts|tsx)$/,
             include: paths.appSrc,
-            loader: require.resolve('ts-loader'),
+            loader: require.resolve('awesome-typescript-loader'),
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
