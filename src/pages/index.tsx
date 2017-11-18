@@ -9,9 +9,6 @@ import Counter from '../pages/Counter'
 import Home from '../pages/Home'
 import FbAuth from '../pages/Authentication/Facebook'
 import Users from '../pages/Users'
-import Signout from '../pages/Authentication/Signout'
-import Signin from '../pages/Authentication/Signin'
-import Signup from '../pages/Authentication/Signup'
 import NewOrg from '../pages/Authentication/NewOrganization'
 import PwdForgotten from '../pages/Password/Forgotten'
 import PwdReset from '../pages/Password/Reset'
@@ -50,9 +47,6 @@ const App = () => (
             <Route.Simple path={sitemap.passwordReset} component={PwdReset} />
 
             {/* Auth */}
-            <Route.NotSignedIn path={sitemap.signin} component={Signin} />
-            <Route.Simple path={sitemap.signout} component={Signout} />
-            <Route.NotSignedIn path={sitemap.signup} component={Signup} />
             <Route.SignedIn path={sitemap.newOrganization} component={NewOrg} />
 
             {/* 404 */}
