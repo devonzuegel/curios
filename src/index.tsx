@@ -1,11 +1,11 @@
 import * as React from 'react'
 import {render} from 'react-dom'
-import {Provider} from 'react-redux'
 import {persistStore} from 'redux-persist'
 
 import registerServiceWorker from './registerServiceWorker'
 import store from './redux/store'
 import Pages from './pages'
+import ApolloWrapper from './apollo'
 
 registerServiceWorker()
 
@@ -30,9 +30,9 @@ class PersistGate extends React.Component<{}, {rehydrating: boolean}> {
     }
 
     return (
-      <Provider store={store}>
+      <ApolloWrapper store={store}>
         <Pages />
-      </Provider>
+      </ApolloWrapper>
     )
   }
 }
