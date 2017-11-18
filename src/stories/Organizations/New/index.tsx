@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import Form, {TFieldState, TFieldConfig} from '../../../components/Form'
-import Card from '../../../components/Card'
-import {notEmpty} from '../../Authentication/utils'
+import Form, {TFieldState, TFieldConfig} from '~/components/Form'
+import Card from '~/components/Card'
+import {notEmpty} from '~/stories/Authentication/utils'
 
 const styles = require('./index.css')
 

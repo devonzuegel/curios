@@ -4,7 +4,7 @@ import {ConnectedRouter} from 'react-router-redux'
 import {MockedProvider} from 'react-apollo/test-utils'
 
 import Pages from './'
-import store, {history} from '../redux/store'
+import store, {history} from '~/redux/store'
 
 jest.mock('./../pages/Authentication/Facebook/facebookSdk', () => ({
   initialize: () => null,

@@ -3,7 +3,7 @@ import * as Redux from 'redux'
 import {connect} from 'react-redux'
 
 import NewOrgForm from '../../../stories/Organizations/New'
-import * as organization from '../../../redux/reducers/organization'
+import * as organization from '~/redux/reducers/organization'
 
 type TCreateOrganizationAction = (
   orgName: string

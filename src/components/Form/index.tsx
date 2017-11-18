@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as R from 'ramda'
 
-import TextInput from '../../components/TextInput'
-import Button from '../../components/Button'
+import TextInput from '~/components/TextInput'
+import Button from '~/components/Button'
 
 const styles = require('./styles.css')
 
