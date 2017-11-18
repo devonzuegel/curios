@@ -1,12 +1,8 @@
 import * as React from 'react'
 
-import Form, {
-  TFieldState,
-  TFieldConfig,
-  TGlobalConstraint,
-} from '../../components/Form'
-import Card from '../../components/Card'
-import {passwordConstraints, notEmpty} from '../Authentication/utils'
+import Form, {TFieldState, TFieldConfig, TGlobalConstraint} from '~/components/Form'
+import Card from '~/components/Card'
+import {passwordConstraints, notEmpty} from '~/stories/Authentication/utils'
 
 const styles = require('./index.css')
 

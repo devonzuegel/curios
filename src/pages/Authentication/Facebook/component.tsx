@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import User from '../../../components/User'
+import User from '~/components/User'
 import * as facebookSdk from './facebookSdk'
 import {TFacebookAuth, TFacebookResponse} from './types'
 

@@ -2,7 +2,7 @@ import * as React from 'react'
 import {Route, RouteProps} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import * as auth from '../../../redux/reducers/auth'
+import * as auth from '~/redux/reducers/auth'
 
 type TProps = {signedIn: boolean} & RouteProps
 

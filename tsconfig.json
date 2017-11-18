@@ -6,9 +6,13 @@
     "lib": ["es6", "dom", "esnext.asynciterable"],
     "sourceMap": true,
     "allowJs": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    },
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

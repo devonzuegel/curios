@@ -3,9 +3,9 @@ import {push} from 'react-router-redux'
 import * as Redux from 'redux'
 import {connect} from 'react-redux'
 
-import * as counterReducer from '../../redux/reducers/counter'
-import sitemap from '../../sitemap'
-import Button from '../../components/Button'
+import * as counterReducer from '~/redux/reducers/counter'
+import sitemap from '~/sitemap'
+import Button from '~/components/Button'
 
 const Home = (props: {
   count: number
