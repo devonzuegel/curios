@@ -1,10 +1,9 @@
 import * as React from 'react'
 import * as Redux from 'redux'
-import {Route, Redirect, RouteProps} from 'react-router-dom'
+import {Route, RouteProps} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import * as auth from '../../../redux/reducers/auth'
-import sitemap from '../../../sitemap'
 
 type TProps = {
   signedIn: boolean
@@ -20,7 +19,7 @@ const SignedIn = (props: TProps) => {
   if (props.path) {
     props.setRedirect(props.path)
   }
-  return <Redirect to={{pathname: sitemap.signin}} />
+  return <Route {...props} component={() => <code>Please sign in. :)</code>} />
 }
 
 type TPartialGlobalState = {auth: auth.TState}
