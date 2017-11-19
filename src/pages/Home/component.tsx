@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import User from '~/components/User'
 import Post from '~/components/Post'
+import ErrorBoundary from '~/components/ErrorBoundary'
 
 export type TUser = {
   id: string
@@ -37,12 +38,12 @@ const UsersList = (props: TAllUsers) => {
     return <h3>...</h3>
   }
   return (
-    <div>
+    <ErrorBoundary>
       {props.allUsers &&
         props.allUsers.map(
           (user, k) => <User {...user} key={k} /> //
         )}
-    </div>
+    </ErrorBoundary>
   )
 }
 
@@ -51,7 +52,7 @@ const PostsList = (props: TAllPosts) => {
     return <h3>...</h3>
   }
   return (
-    <div>
+    <ErrorBoundary>
       <div
         style={{
           flexWrap: 'wrap',
@@ -64,30 +65,8 @@ const PostsList = (props: TAllPosts) => {
           props.allPosts.map((post, k) => <Post {...post} key={k} />) //
         }
       </div>
-    </div>
+    </ErrorBoundary>
   )
-}
-
-class ErrorBoundary extends React.Component<{children?: any}, {hasError: boolean}> {
-  constructor(props: any) {
-    super(props)
-    this.state = {hasError: false}
-  }
-
-  componentDidCatch(error: any, info: any) {
-    // Display fallback UI
-    this.setState({hasError: true})
-    // You can also log the error to an error reporting service
-    console.log(error, info)
-  }
-
-  render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return <h1>Something went wrong.</h1>
-    }
-    return this.props.children
-  }
 }
 
 export default (props: TProps) => (
