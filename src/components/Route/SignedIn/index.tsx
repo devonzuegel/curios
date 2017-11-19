@@ -10,7 +10,6 @@ import * as api from '~/graphql'
 type TPartialGlobalState = {auth: auth.TState}
 
 const mapStateToProps = (state: TPartialGlobalState, ownProps: RouteProps) => ({
-  signedIn: state.auth.signedIn,
   currentURL: ownProps.path,
 })
 
