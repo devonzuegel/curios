@@ -11,7 +11,7 @@ module.exports = {
   'Assert sitemap': browser => {
     const expected = [
       {path: '/', text: 'Home'},
-      {path: '/counter', text: 'Please sign in. :)'},
+      {path: '/users', text: 'Users'},
       {path: '/foobar', text: '404\nNot found'},
     ]
     expected.map(({path, text, title}) => {
@@ -28,6 +28,7 @@ module.exports = {
     protectedPaths.map(path => {
       browser
         .url(config.url(path))
+        .pause(500)
         // Check that we don't have access to the page
         .assert.containsText('html', 'Please sign in. :)')
         .assert.urlEquals(config.url(path))
