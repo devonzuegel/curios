@@ -7,7 +7,7 @@ import Wrapper from '../components/Wrapper'
 import * as Route from '../components/Route'
 import Counter from '../pages/Counter'
 import FbAuth from '../pages/Authentication/Facebook'
-import Users from '../pages/Users'
+import Home from '../pages/Home'
 import NotFound from '../pages/NotFound'
 import sitemap from '../sitemap'
 
@@ -18,7 +18,7 @@ const App = () => (
     <div className={styles.app}>
       <Wrapper>
         <header className={styles.header}>
-          <Link to={sitemap.home}>Users</Link>
+          <Link to={sitemap.home}>Home</Link>
           <Link to={sitemap.counter}>Counter</Link>
           <div style={{float: 'right'}}>
             <FbAuth />
@@ -28,7 +28,7 @@ const App = () => (
         <main>
           {/* Render only the first-matched component */}
           <Switch>
-            <Route.Simple exact path={sitemap.home} component={Users} />
+            <Route.Simple exact path={sitemap.home} component={Home} />
             <Route.SignedIn path={sitemap.counter} component={Counter} />
 
             {/* 404 */}

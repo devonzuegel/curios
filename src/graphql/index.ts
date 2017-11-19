@@ -27,3 +27,13 @@ export const ALL_USERS = gql`
     }
   }
 `
+
+export const ALL_POSTS = gql`
+  query AllPostsQuery {
+    allPosts(orderBy: createdAt_DESC) {
+      id
+      imageUrl
+      description
+    }
+  }
+`

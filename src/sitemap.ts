@@ -1,5 +1,5 @@
 enum sitemap {
-  home = '/users',
+  home = '/',
   counter = '/counter',
 }
 
