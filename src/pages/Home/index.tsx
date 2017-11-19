@@ -1,11 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 
-import * as organization from '~/redux/reducers/organization'
-
-type TProps = {organization: organization.TState}
-
-const HomePage = (props: TProps) => (
+const HomePage = (props: {}) => (
   <div style={{maxWidth: '300px'}}>
     <h2>Home</h2>
     <pre>
@@ -15,8 +11,6 @@ const HomePage = (props: TProps) => (
   </div>
 )
 
-type TPartialGlobalState = {organization: organization.TState}
-
-const mapStateToProps = (state: TPartialGlobalState) => state
+const mapStateToProps = (state: {}) => state
 
 export default connect(mapStateToProps)(HomePage)

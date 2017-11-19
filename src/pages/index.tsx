@@ -9,7 +9,6 @@ import Counter from '../pages/Counter'
 import Home from '../pages/Home'
 import FbAuth from '../pages/Authentication/Facebook'
 import Users from '../pages/Users'
-import NewOrg from '../pages/Authentication/NewOrganization'
 import NotFound from '../pages/NotFound'
 import sitemap from '../sitemap'
 
@@ -34,9 +33,6 @@ const App = () => (
             <Route.Simple exact path={sitemap.users} component={Users} />
             <Route.Simple exact path={sitemap.home} component={Home} />
             <Route.SignedIn path={sitemap.counter} component={Counter} />
-
-            {/* Auth */}
-            <Route.SignedIn path={sitemap.newOrganization} component={NewOrg} />
 
             {/* 404 */}
             <Route.Simple component={NotFound} />

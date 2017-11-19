@@ -1,9 +1,6 @@
 import * as Redux from 'redux'
 
 export enum ActionTypeKeys {
-  SIGNUP = 'auth/SIGNUP',
-  SIGNIN = 'auth/SIGNIN',
-  SIGNOUT = 'auth/SIGNOUT',
   SET_REDIRECT = 'auth/SET_REDIRECT',
   OTHER = '__other__',
 }
