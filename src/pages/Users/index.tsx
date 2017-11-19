@@ -1,7 +1,7 @@
 import * as Apollo from 'react-apollo'
 
+import * as api from '~/graphql'
 import UsersPage, {TUser, TProps} from './component'
-import * as api from '../../graphql'
 
 type TResponse = {allUsers: TUser[]}
 

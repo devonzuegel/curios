@@ -10,7 +10,6 @@ const signin = browser =>
 module.exports = {
   'Assert sitemap': browser => {
     const expected = [
-      {path: '/', text: 'Home'},
       {path: '/users', text: 'Users'},
       {path: '/foobar', text: '404\nNot found'},
     ]
