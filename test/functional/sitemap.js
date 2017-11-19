@@ -12,9 +12,7 @@ module.exports = {
     const expected = [
       {path: '/', text: 'Home'},
       {path: '/counter', text: 'Please sign in. :)'},
-      {path: '/password-reset', text: 'Reset!'},
       {path: '/foobar', text: '404\nNot found'},
-      {path: '/password-forgotten', text: 'Password forgotten'},
     ]
     expected.map(({path, text, title}) => {
       browser
