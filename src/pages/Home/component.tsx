@@ -58,7 +58,7 @@ const PostsList = (props: TAllPosts) => {
           flexWrap: 'wrap',
           display: 'flex',
           alignItems: 'baseline',
-          justifyContent: 'space-between',
+          justifyContent: 'space-around',
         }}
       >
         {props.allPosts &&
