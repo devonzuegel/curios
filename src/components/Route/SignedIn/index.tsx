@@ -1,35 +1,27 @@
-import * as React from 'react'
 import * as Redux from 'redux'
-import {Route, RouteProps} from 'react-router-dom'
+import {RouteProps} from 'react-router-dom'
 import {connect} from 'react-redux'
+import * as Apollo from 'react-apollo'
 
 import * as auth from '~/redux/reducers/auth'
-
-type TProps = {
-  signedIn: boolean
-  setRedirect: (
-    to: string
-  ) => (d: Redux.Dispatch<auth.TSetRedirect>) => auth.TSetRedirect
-} & RouteProps
-
-const SignedIn = (props: TProps) => {
-  if (props.signedIn) {
-    return <Route {...props} />
-  }
-  if (props.path) {
-    props.setRedirect(props.path)
-  }
-  return <Route {...props} component={() => <code>Please sign in. :)</code>} />
-}
+import SignedIn from './component'
+import * as api from '~/graphql'
 
 type TPartialGlobalState = {auth: auth.TState}
 
 const mapStateToProps = (state: TPartialGlobalState, ownProps: RouteProps) => ({
-  signedIn: state.auth.signedIn,
   currentURL: ownProps.path,
 })
 
 const mapDispatchToProps = () => (dispatch: Redux.Dispatch<auth.TSetRedirect>) =>
   Redux.bindActionCreators({setRedirect: auth.actions.setRedirect}, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignedIn)
+export default Apollo.compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  Apollo.graphql(api.AUTHENTICATE_FACEBOOK_USER, {
+    name: 'authenticateUserMutation',
+  }),
+  Apollo.graphql<{}>(api.LOGGED_IN_USER, {
+    options: {fetchPolicy: 'network-only'},
+  })
+)(SignedIn)

@@ -1,22 +1,9 @@
-import * as React from 'react'
-import {connect} from 'react-redux'
+import * as Apollo from 'react-apollo'
 
-import * as organization from '~/redux/reducers/organization'
+import * as api from '~/graphql'
+import HomePage, {TProps} from './component'
 
-type TProps = {organization: organization.TState}
-
-const HomePage = (props: TProps) => (
-  <div style={{maxWidth: '300px'}}>
-    <h2>Home</h2>
-    <pre>
-      <h3>Redux store:</h3>
-      {JSON.stringify(props, null, 2)}
-    </pre>
-  </div>
-)
-
-type TPartialGlobalState = {organization: organization.TState}
-
-const mapStateToProps = (state: TPartialGlobalState) => state
-
-export default connect(mapStateToProps)(HomePage)
+export default Apollo.compose(
+  Apollo.graphql(api.ALL_POSTS, {name: 'AllPosts'}),
+  Apollo.graphql<{}, TProps>(api.ALL_USERS, {name: 'AllUsers'})
+)(HomePage)
