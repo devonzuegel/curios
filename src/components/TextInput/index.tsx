@@ -7,6 +7,7 @@ const styles = require('./index.css')
 
 type TProps = {
   label: string
+  value: string
   note?: string
   name?: string
   hidden?: boolean
@@ -36,6 +37,7 @@ const TextInput = (props: TProps) => (
       id={props.name || U.slugify(props.label)}
       onChange={e => props.onChange(e.target.value)}
       onBlur={props.onBlur}
+      value={props.value}
       onKeyPress={e => {
         if (e.key === 'Enter' && props.onSubmit) {
           props.onSubmit()
