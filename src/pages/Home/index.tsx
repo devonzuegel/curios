@@ -9,6 +9,5 @@ export default Apollo.compose(
     options: {fetchPolicy: 'network-only'},
   }),
   Apollo.graphql(api.CREATE_POST, {name: 'CreatePostMutation'}),
-  Apollo.graphql(api.ALL_POSTS, {name: 'AllPosts'}),
-  Apollo.graphql(api.ALL_USERS, {name: 'AllUsers'})
+  Apollo.graphql(api.ALL_POSTS, {name: 'AllPosts'})
 )(HomePage)

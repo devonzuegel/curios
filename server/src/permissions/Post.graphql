@@ -1,0 +1,7 @@
+# The following conditions must hold:
+#   1. There needs to exist a Post node with its id being equal to $node_id
+#   2. The id of the author of that Post node needs to be equal to $user_id
+
+query($node_id: ID!, $user_id: ID!) {
+  SomePostExists(filter: {id: $node_id, author: {id: $user_id}})
+}

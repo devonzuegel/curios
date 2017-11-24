@@ -1,8 +1,11 @@
-# This file is the main config file for your Graphcool Service.
+# This is the main config file for your Graphcool Service.
 
-# In the types.graphql you define your data schema
+# You define your data schema in `types.graphql`.
 types: ./types.graphql
 
+#############################################################################
+#### Functions ##############################################################
+#############################################################################
 
 functions:
 
@@ -20,14 +23,38 @@ functions:
     type: resolver
     schema: ./src/facebook/loggedInUser.graphql
 
-# Model/Relation permissions are used to limit the API access
-# To take the burden of thinking about those while development, we
-# preconfigured the wildcard ("*") permission that allows everything
-# Read more here:
+#############################################################################
+#### Permissions ############################################################
+#############################################################################
+
+# Model/Relation permissions are used to limit the API access. Read more here:
 # https://docs-next.graph.cool/reference/auth/authorization/overview-iegoo0heez
 permissions:
-- operation: "*"
+# Anyone can read posts.
+- operation: Post.read
 
+# Users who are trying to perform the createPost mutation need to be
+# authenticated. The second permission for UsersPosts is needed because
+# the createPost mutation will also create a relation (which is called
+# UsersPosts as defined in types.graphql), so the connect operation on
+# the relation needs to be allowed as well.
+- operation: Post.create
+  authenticated: true
+- operation: UserPosts.connect
+  authenticated: true
+
+# Allow only the authors of a post to udpate and delete it.
+- operation: Post.update
+  authenticated: true
+  query: src/permissions/Post.graphql
+- operation: Post.delete
+  authenticated: true
+  query: src/permissions/Post.graphql
+
+
+#############################################################################
+#### Misc ###################################################################
+#############################################################################
 
 # Your root tokens used for functions to get full access to the API
 # Read more here:

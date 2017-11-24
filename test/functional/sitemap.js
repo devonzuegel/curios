@@ -10,12 +10,13 @@ const signin = browser =>
 module.exports = {
   'Assert sitemap': browser => {
     const expected = [
-      {path: '/', text: 'Users'},
+      {path: '/', text: 'Image URL'},
       {path: '/foobar', text: '404\nNot found'},
     ]
     expected.map(({path, text, title}) => {
       browser
         .url(config.url(path))
+        .pause(1000)
         .assert.containsText('html', text)
         .assert.title('Curios')
     })

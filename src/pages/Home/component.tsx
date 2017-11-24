@@ -1,25 +1,10 @@
 import * as React from 'react'
 
-import User from '~/components/User'
 import Post from '~/components/Post'
 import ErrorBoundary from '~/components/ErrorBoundary'
 import CreatePost from './CreatePost'
 import {TProps as TCreatePostProps} from './CreatePost'
-import {TAllUsers, THomePageProps} from './types'
-
-const UsersList = (props: TAllUsers) => {
-  if (props.loading) {
-    return <h3>...</h3>
-  }
-  return (
-    <ErrorBoundary>
-      {props.allUsers &&
-        props.allUsers.map(
-          (user, k) => <User {...user} key={k} /> //
-        )}
-    </ErrorBoundary>
-  )
-}
+import {THomePageProps} from './types'
 
 const PostsList = (props: TCreatePostProps) => {
   if (props.AllPosts.loading) {
@@ -47,10 +32,6 @@ const PostsList = (props: TCreatePostProps) => {
 
 export default (props: THomePageProps) => (
   <ErrorBoundary>
-    <h2>Users</h2>
-    <UsersList {...props.AllUsers} />
-    <br />
-    <h2>Posts</h2>
     <PostsList
       CreatePostMutation={props.CreatePostMutation}
       AllPosts={props.AllPosts}
