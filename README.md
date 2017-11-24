@@ -35,6 +35,14 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
+In a separate terminal window, start the local graphcool server by running:
+
+```sh
+graphcool local start
+```
+
+Alternatively, you can point the app to `URIs.cloud`, rather the default `URIs.local`. In this case, it'll call the deployed graphcool API, but keep in mind that this is the staging server. And as of Dec 2017, that's the data that populates `curios.city`, though we'll create a separate prod instance once the MVP is done.
+
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.<br>
@@ -53,6 +61,12 @@ See the section about [deployment](#deployment) for more information.
 ## Deployment
 
 The app is deployed to prod at at [curios.herokuapp.com](https://curios.herokuapp.com/) through Heroku. You can view the app's dashboard at [dashboard.heroku.com](https://dashboard.heroku.com/).
+
+### Server deployment
+
+```sh
+graphcool deploy --target curios
+```
 
 ## Functional Tests
 
