@@ -68,19 +68,19 @@ module.exports = event => {
   }
 
   function generateGraphcoolToken(graphcoolUserId) {
-    return graphcool.generateAuthToken(graphcoolUserId, 'User')
+    return graphcool.generateNodeToken(graphcoolUserId, 'User')
   }
 
   return getFacebookAccountData(facebookToken)
-    .then(facebookUser => {
-      return getGraphcoolUser(facebookUser).then(graphcoolUser => {
+    .then(facebookUser =>
+      getGraphcoolUser(facebookUser).then(graphcoolUser => {
         if (!graphcoolUser) {
           return createGraphcoolUser(facebookUser)
         } else {
           return graphcoolUser.id
         }
       })
-    })
+    )
     .then(generateGraphcoolToken)
     .then(token => {
       return {
@@ -90,11 +90,8 @@ module.exports = event => {
       }
     })
     .catch(error => {
+      // Log error but don't expose to caller
       console.log(error)
-
-      // don't expose error message to client!
-      return {
-        error: 'An unexpected error occured.',
-      }
+      return {error: 'An unexpected error occured.'}
     })
 }

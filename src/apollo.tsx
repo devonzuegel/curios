@@ -3,8 +3,14 @@ import * as Redux from 'redux'
 
 import {ApolloClient, createNetworkInterface, ApolloProvider} from 'react-apollo'
 
-const GRAPHCOOL_URI = 'https://api.graph.cool/simple/v1/cja3m4qdf0w7m0117v8ouufto'
-const networkInterface = createNetworkInterface({uri: GRAPHCOOL_URI})
+const URIs = {
+  cloud: 'https://api.graph.cool/simple/v1/cja3m4qdf0w7m0117v8ouufto',
+  local: 'http://localhost:60000/simple/v1/cjadjqp28000n019648w9ulno',
+}
+
+const networkInterface = createNetworkInterface({
+  uri: process.env.NODE_ENV === 'development' ? URIs.local : URIs.cloud,
+})
 
 networkInterface.use([
   {
