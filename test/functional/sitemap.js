@@ -27,7 +27,7 @@ module.exports = {
     protectedPaths.map(path => {
       browser
         .url(config.url(path))
-        .pause(500)
+        .pause(1000)
         // Check that we don't have access to the page
         .assert.containsText('html', 'Please sign in. :)')
         .assert.urlEquals(config.url(path))

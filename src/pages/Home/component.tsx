@@ -3,35 +3,9 @@ import * as React from 'react'
 import User from '~/components/User'
 import Post from '~/components/Post'
 import ErrorBoundary from '~/components/ErrorBoundary'
-
-export type TUser = {
-  id: string
-  facebookUserId: string
-  facebookFirstName: string
-  __typename: 'User'
-}
-
-export type TPost = {
-  id: string
-  imageUrl: string
-  description: string
-  __typename: 'Post'
-}
-
-export type TAllUsers = {
-  allUsers: TUser[]
-  loading: boolean
-}
-
-export type TAllPosts = {
-  allPosts: TPost[]
-  loading: boolean
-}
-
-export type TProps = {
-  AllUsers: TAllUsers
-  AllPosts: TAllPosts
-}
+import CreatePost from './CreatePost'
+import {TProps as TCreatePostProps} from './CreatePost'
+import {TAllUsers, THomePageProps} from './types'
 
 const UsersList = (props: TAllUsers) => {
   if (props.loading) {
@@ -47,8 +21,8 @@ const UsersList = (props: TAllUsers) => {
   )
 }
 
-const PostsList = (props: TAllPosts) => {
-  if (props.loading) {
+const PostsList = (props: TCreatePostProps) => {
+  if (props.AllPosts.loading) {
     return <h3>...</h3>
   }
   return (
@@ -61,20 +35,25 @@ const PostsList = (props: TAllPosts) => {
           justifyContent: 'space-around',
         }}
       >
-        {props.allPosts &&
-          props.allPosts.map((post, k) => <Post {...post} key={k} />) //
-        }
+        <CreatePost {...props} />
+        {props.AllPosts.allPosts &&
+          props.AllPosts.allPosts.map((post, k) => (
+            <Post {...post} key={k} /> //
+          ))}
       </div>
     </ErrorBoundary>
   )
 }
 
-export default (props: TProps) => (
+export default (props: THomePageProps) => (
   <ErrorBoundary>
     <h2>Users</h2>
     <UsersList {...props.AllUsers} />
     <br />
     <h2>Posts</h2>
-    <PostsList {...props.AllPosts} />
+    <PostsList
+      CreatePostMutation={props.CreatePostMutation}
+      AllPosts={props.AllPosts}
+    />
   </ErrorBoundary>
 )

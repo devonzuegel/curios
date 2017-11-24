@@ -37,3 +37,11 @@ export const ALL_POSTS = gql`
     }
   }
 `
+
+export const CREATE_POST = gql`
+  mutation CreatePost($description: String!, $imageUrl: String!, $authorId: ID!) {
+    createPost(description: $description, imageUrl: $imageUrl, authorId: $authorId) {
+      id
+    }
+  }
+`
