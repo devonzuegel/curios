@@ -1,6 +1,8 @@
 ## Table of Contents
 
+- [Set up](#set-up)
 - [Available Scripts](#available-scripts): `start`, `test`, and `build`
+- [Deployment](#deployment)
 - [Running Tests](#running-tests)
 - [Formatting Code Automatically](#formatting-code-automatically)
 - [Installing Dependencies](#installing-dependencies)
@@ -14,6 +16,12 @@
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
 - [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
+
+## Set up
+
+1. Clone the repository, then `cd` into the new `curios` directory.
+2. Run `$ yarn` to install all the dependencies. (You may need to install `yarn` first: `$ brew install yarn`.)
+3. Install [`serve`](https://github.com/zeit/serve) globally: `$ yarn global add serve`
 
 ## Available Scripts
 
@@ -41,6 +49,10 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [deployment](#deployment) for more information.
+
+## Deployment
+
+The app is deployed to prod at at [curios.herokuapp.com](https://curios.herokuapp.com/) through Heroku. You can view the app's dashboard at [dashboard.heroku.com](https://dashboard.heroku.com/).
 
 ## Functional Tests
 
@@ -664,8 +676,7 @@ Files on the left have more priority than files on the right:
 These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
 
->Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
-these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
+>Note: If you are defining environment variables for development, Herkou and Travis will most likely need these defined as well. Consult their documentation how to do this: [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
 
 ## Developing Components in Isolation
 
