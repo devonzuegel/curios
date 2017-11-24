@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "graphcool-lib": "^0.0.3"
+    "graphcool-lib": "0.1.4"
   }
 }

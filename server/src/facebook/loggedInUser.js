@@ -1,7 +1,22 @@
 const fromEvent = require('graphcool-lib').fromEvent
 
-function getUser(api, userId) {
-  return api
+const handleError = error => {
+  // Log error but don't expose to caller
+  console.log(error)
+  return {
+    error: `An unexpected error occured`,
+  }
+}
+
+const handleUser = user => {
+  if (!user) {
+    return {error: `No user with id: ${userId}`}
+  }
+  return {data: user}
+}
+
+const getUser = (api, userId) =>
+  api
     .request(
       `
       query {
@@ -12,16 +27,8 @@ function getUser(api, userId) {
         }
       }`
     )
-    .then(userQueryResult => {
-      console.log(userQueryResult)
-      return userQueryResult.User
-    })
-    .catch(error => {
-      // Log error but don't expose to caller
-      console.log(error)
-      return {error: `An unexpected error occured`}
-    })
-}
+    .then(userQueryResult => userQueryResult.User)
+    .catch(handleError)
 
 module.exports = event => {
   if (!event.context.auth || !event.context.auth.nodeId) {
@@ -33,15 +40,6 @@ module.exports = event => {
   const api = graphcool.api('simple/v1')
 
   return getUser(api, userId)
-    .then(user => {
-      if (!user) {
-        return {error: `No user with id: ${userId}`}
-      }
-      return {data: user}
-    })
-    .catch(error => {
-      // Log error but don't expose to caller
-      console.log(error)
-      return {error: `An unexpected error occured`}
-    })
+    .then(handleUser)
+    .catch(handleError)
 }
