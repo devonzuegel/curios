@@ -21,6 +21,7 @@ export type TFieldConfig = {
   label: string
   note?: string
   hidden?: boolean
+  initialState?: string
   constraints: TConstraint[]
 }
 
@@ -51,7 +52,11 @@ class Form extends React.Component<TProps, TFormState> {
     ...R.keys(this.props.fields).reduce(
       (soFar, fieldName) => ({
         ...soFar,
-        [fieldName]: {value: '', error: null, edited: false},
+        [fieldName]: {
+          value: this.props.fields[fieldName].initialState || '',
+          error: null,
+          edited: false,
+        },
       }),
       {}
     ),
@@ -158,6 +163,7 @@ class Form extends React.Component<TProps, TFormState> {
             onBlur={this.setEdited(fieldName)}
             onSubmit={this.submit}
             key={k}
+            value={this.state[fieldName].value}
           />
         ))}
         <Button stretch disabled={!this.allFieldsValid()} onClick={this.submit}>
