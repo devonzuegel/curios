@@ -12,6 +12,7 @@ const PostsList = (props: TCreatePostProps) => {
   }
   return (
     <ErrorBoundary>
+      <CreatePost {...props} />
       <div
         style={{
           flexWrap: 'wrap',
@@ -20,7 +21,6 @@ const PostsList = (props: TCreatePostProps) => {
           justifyContent: 'space-around',
         }}
       >
-        <CreatePost {...props} />
         {props.AllPosts.allPosts &&
           props.AllPosts.allPosts.map((post, k) => (
             <Post {...post} key={k} /> //
