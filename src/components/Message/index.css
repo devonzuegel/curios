@@ -1,9 +1,0 @@
-@import '../../variables.css';
-
-.message {
-  margin: var(--spacing-small) auto;
-  padding: var(--spacing-small);
-  background: color(var(--blue) alpha(10%));
-  color: black;
-  border-radius: 3px;
-}

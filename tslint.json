@@ -2,10 +2,10 @@
   "extends": ["tslint-react"],
   "rules": {
     "align": [true, "parameters"],
-    "ban": false,
+    "ban": [true, "fit", "fdescribe"],
     "class-name": true,
     "comment-format": [true, "check-space"],
-    "curly": true,
+    "curly": [true, "ignore-same-line"],
     "eofline": false,
     "forin": true,
     "indent": [true, "spaces"],
@@ -31,6 +31,8 @@
     ],
     "no-any": false,
     "no-arg": true,
+    "no-floating-promises": true,
+    "no-focused-tests": true,
     "no-bitwise": true,
     "no-console": [
       false,
@@ -65,9 +67,7 @@
     "radix": true,
     "semicolon": [true, "never"],
     "switch-default": true,
-
     "trailing-comma": [false],
-
     "triple-equals": [true, "allow-null-check"],
     "typedef": [true, "parameter", "property-declaration"],
     "typedef-whitespace": [

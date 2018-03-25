@@ -1,4 +1,0 @@
-targets:
-  curios: shared-eu-west-1/cja3m4qdf0w7m0117v8ouufto
-  local: local/cjadjqp28000n019648w9ulno
-  default: local

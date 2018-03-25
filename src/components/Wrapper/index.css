@@ -1,6 +1,0 @@
-@import '../../variables.css';
-
-.wrapper {
-  max-width: 900px;
-  margin: var(--spacing-large) auto;
-}

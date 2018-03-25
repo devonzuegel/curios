@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source './bin/shared/strict-mode.sh'
+
+# Make sure that build/server.js exists
+./node_modules/webpack/bin/webpack.js --config config/webpack.server.ts
+
+# Watch server for changes
+node_modules/nodemon/bin/nodemon.js \
+    --watch 'server/**/*.ts' \
+    --ignore 'server/**/*.test.ts' \
+    --exec 'node' build/server.js
+

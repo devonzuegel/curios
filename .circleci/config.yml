@@ -1,0 +1,144 @@
+version: 2
+
+# We can use YAML's alias features to deduplicate repetitive definitions
+# in our build description. See https://git.io/vb6uJ for an example of
+# circle doing this for their own repos
+references:
+
+  # `restore_cache` step necessary for every build step to work
+  restore_node_modules: &restore_node_modules
+    restore_cache:
+      key: node_modules-cache-{{ checksum "package.json" }}
+
+  # Environment that provides the postgres DB `curios-web-test`
+  environment_with_database: &environment_with_database
+    - image: circleci/node:7.10
+      environment:
+        PGHOST: 127.0.0.1
+        PGUSER: ubuntu
+        NODE_ENV: test
+
+    - image: circleci/postgres:9.6.2-alpine
+      environment:
+        POSTGRES_USER: ubuntu
+        POSTGRES_PASSWORD: ""
+        POSTGRES_DB: curios-web-test
+
+  # Recommended way to avoid Postgres not being online for build steps: http://bit.ly/2k7Ls2l
+  wait_for_db: &wait_for_db
+    run:
+      name: Wait for db
+      command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+jobs:
+  install_dependencies:
+    docker:
+      - image: circleci/node:7.10
+
+    steps:
+      - checkout
+
+      - *restore_node_modules
+
+      - run: yarn install --frozen-lockfile --prefer-offline
+
+      # Download and cache dependencies
+      - save_cache:
+          key: node_modules-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+
+  test:
+    docker:
+      *environment_with_database
+
+    steps:
+      - checkout
+
+      - *wait_for_db
+
+      - *restore_node_modules
+
+      - run:
+          name: Migrate test DB
+          command: bin/migrate
+
+      # run tests!
+      - run: yarn test
+
+  tslint:
+    docker:
+      - image: circleci/node:7.10
+
+    steps:
+      - checkout
+
+      - *restore_node_modules
+
+      - run: bin/tslint
+
+  verify_build:
+    docker:
+      - image: circleci/node:7.10
+
+    steps:
+      - checkout
+
+      - *restore_node_modules
+
+      - run:
+          name: Verify Heroku postbuild
+          command: yarn && yarn heroku-postbuild
+
+  verify_database:
+    docker:
+      *environment_with_database
+
+    steps:
+      - checkout
+
+      - *wait_for_db
+
+      - *restore_node_modules
+
+      # All this does is verify migrations work right now.
+      - run: bin/migrate
+
+  check_prettier:
+    docker:
+      - image: circleci/node:7.10
+
+    steps:
+      - checkout
+
+      - *restore_node_modules
+
+      - run:
+          name: Check for prettier violations
+          command: bin/prettier && git diff --exit-code
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - install_dependencies
+
+      - check_prettier:
+          requires:
+            - install_dependencies
+
+      - tslint:
+          requires:
+            - install_dependencies
+
+      - test:
+          requires:
+            - install_dependencies
+
+      - verify_database:
+          requires:
+            - install_dependencies
+
+      - verify_build:
+          requires:
+            - install_dependencies

@@ -1,0 +1,20 @@
+@import '@client/variables.css';
+
+.app {
+  border: 5px solid red;
+}
+
+.header {
+  margin-top: var(--spacing-large);
+  margin-bottom: var(--spacing-large);
+}
+
+.header > * {
+  margin-right: var(--spacing-base);
+}
+
+.active-link {
+  color: color(var(--blue) blackness(10%));
+  transition: var(--transition);
+  border-bottom: 2px solid color(var(--blue) whiteness(20%) alpha(-75%));
+}
