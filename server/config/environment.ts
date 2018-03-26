@@ -24,7 +24,6 @@ interface IEnvironmentConfig {
   appPort: number
   nodeEnv: string
   pipelineStage: PipelineStages
-  redisUrl: string
   sessionSecret: string
   hostname: string
 }
@@ -62,7 +61,6 @@ export const env: IEnvironmentConfig = {
   appPort: getPort(),
   nodeEnv: environmentVariable('NODE_ENV'),
   pipelineStage: getPipelineStage(),
-  redisUrl: environmentVariable('REDIS_URL'),
   sessionSecret: environmentVariable('SESSION_SECRET'),
   hostname: environmentVariable('HOSTNAME'),
 }
