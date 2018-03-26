@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source './bin/shared/strict-mode.sh'
+
+# Build client
+node client/bin/build.js

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source './bin/shared/strict-mode.sh'
+
+NODE_ENV=${NODE_ENV:-DEVELOPMENT}
+
+node_modules/.bin/sequelize db:migrate --migrations-path db/migrations

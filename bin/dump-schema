@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source './bin/shared/strict-mode.sh'
+
+# Hardcode curios-web-dev since we should never be running this in prod
+pg_dump curios-web-dev --schema-only --no-owner > db/schema.sql

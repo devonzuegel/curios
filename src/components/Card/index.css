@@ -1,8 +1,0 @@
-@import '../../variables.css';
-
-.card {
-  border-radius: var(--spacing-xsmall);
-  box-shadow: var(--box-shadow);
-  padding: var(--spacing-base);
-  margin: var(--spacing-large) 0;
-}
