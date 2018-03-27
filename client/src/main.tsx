@@ -6,7 +6,6 @@ import {Provider} from 'react-redux'
 import Loading from '@client/components/Loading'
 import store from './redux/store'
 import Pages from './pages'
-import './global.css'
 
 class PersistGate extends React.Component<{}, {rehydrating: boolean}> {
   state = {rehydrating: true}
