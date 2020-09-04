@@ -93,7 +93,7 @@
     "redux-persist": "^4.10.1",
     "redux-thunk": "^2.2.0",
     "reflect-metadata": "^0.1.10",
-    "sequelize": "^4.28.5",
+    "sequelize": "^5.15.1",
     "sequelize-cli": "^3.2.0",
     "sequelize-typescript": "^0.6.1",
     "source-map-loader": "^0.2.1",
