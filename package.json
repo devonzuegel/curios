@@ -109,7 +109,7 @@
     "tslint-react": "^3.0.0",
     "typescript": "~2.7.1",
     "uglifyjs-webpack-plugin": "^1.1.6",
-    "underscore": "^1.8.3",
+    "underscore": "^1.12.1",
     "url-loader": "0.5.9",
     "webpack": "3.10.0",
     "webpack-dev-server": "2.7.1",
