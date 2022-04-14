@@ -42,7 +42,7 @@
     "@types/underscore": "^1.8.5",
     "@types/webpack": "^3.8.1",
     "@types/winston": "^2.3.7",
-    "async": "^2.6.0",
+    "async": "^3.2.2",
     "autoprefixer": "7.1.2",
     "awesome-typescript-loader": "^3.4.0",
     "babel-register": "^6.26.0",
